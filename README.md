@@ -1,6 +1,4 @@
 # group-project1
-Added some much needed text for the README
-
 As a user, I want to be able to search for recipes across the web, and be able to sort them
 by region of origin, as well as ingredients used.
 
