@@ -25,6 +25,8 @@ search button = search-btn
 
 Styling
 ----------
+*Color Palate*
+![image](https://github.com/brochb/group-project1/assets/39662430/95fd815b-5e5a-4091-8c90-479925cbfeb3)
 
 
 
