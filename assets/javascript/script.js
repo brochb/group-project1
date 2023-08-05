@@ -11,7 +11,7 @@ searchButton.addEventListener("click", function () {
     var queryInput = document.getElementById("query-input").value;
     if (queryInput.trim() !== "") {
 
-        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput;
+        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&results_per_page=25';
 
         var requestOptions = {
             method: 'GET',
@@ -21,7 +21,12 @@ searchButton.addEventListener("click", function () {
 
         fetch(apiUrl, requestOptions)
             .then(response => response.json())
-            .then(result => console.log(result))
+            .then(result => {
+                // Save the results in the session storage before redirecting
+                sessionStorage.setItem('searchResults', JSON.stringify(result));
+                // Redirect to the results page
+                window.location.href = "results.html";
+            })
             .catch(error => console.log('error', error));
     } else {
         // In case the input is empty
