@@ -1,0 +1,6 @@
+/* Example style for the book items  in the results.html file for debuggin purposes*/
+.book-item {
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-bottom: 10px;
+}
