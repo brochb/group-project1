@@ -49,7 +49,7 @@ searchButton.addEventListener("click", function () {
     var queryInput = document.getElementById("query-input").value;
     if (queryInput.trim() !== "") {
 
-        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&page=1&results_per_page=25';
+        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&page=1&results_per_page=100';
 
         var requestOptions = {
             method: 'GET',

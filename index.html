@@ -9,8 +9,31 @@
     <h1>The Book Search Extraordinaire!</h1>
     <section name="fic-nonfic" id="search-container" autocomplete="off" required>
         <select id="query-input">
-            <option value="Fiction">Fiction</option>
-            <option value="Nonfiction">Nonfiction</option>
+            <div>
+                <option value="Fiction">Fiction</option>
+                <option value="Nonfiction">Nonfiction</option>
+            </div>
+            <input type="text">Author's First Name</input>
+            <input type="text">Author's Last Name</input>
+            <!-- <div>
+                <option value="Fiction, Non-fiction & Poetry">Fiction, Non-fiction & Poetry</option>
+                <option value="Science Fiction & Fantasy">Science Fiction & Fantasy</option>
+                <option value="Real Life">Real Life</option>
+                <option value="Mystery & Suspense">Mystery & Suspense</option>
+                <option value="Hobbies, Sports & Outdoors">Hobbies, Sports & Outdoors</option>
+                <option value="Animals, Bugs & Pets">Animals, Bugs & Pets</option>
+                <option value="Science & Technology">Science & Technology</option>
+            </div> -->
+            <!-- I think we should add boxes to narrow the searches. The information can vary from the following list:
+Author's first name
+Author's last name
+Awards (any awards in particular the user is looking ofr (currently the category exist I just haven't been able to find a single book with an award)
+Categories (there is "fiction, non-fiction & poetry" and "real life" so far. I sure we can find more)
+Subcategories
+Summary (this should be in the results page under the book' information)
+Title (we can remove words like "the, and, of, etc")
+Vocab words
+Lexile (which is the reading level difficulty max=2000)-->
         </select>
         <button id="search-button">Search</button>
 
@@ -22,4 +45,5 @@
 
     <script src="./assets/javascript/script.js"></script>
 </body>
+
 </html>
