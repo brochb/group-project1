@@ -27,7 +27,11 @@ Styling
 ----------
 *Color Palate*
 ![image](https://github.com/brochb/group-project1/assets/39662430/95fd815b-5e5a-4091-8c90-479925cbfeb3)
-
+  --firstcolor: #d9a441;
+  --secondcolor: #BF843B;
+  --thirdcolor: #f2e8dc;
+  --fourthcolor: #8c5626;
+  --fifthcolor: #593719;
 
 
 *** PAGE 2 *** (does not exist yet)
