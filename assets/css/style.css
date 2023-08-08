@@ -1,3 +1,7 @@
+*{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .book-item {
     border: 1px solid #000000;
     padding: 10px;
@@ -43,6 +47,14 @@ h3{
 label{
   font-style: bold;
   justify-content: space-between;
+}
+
+.placeholder{
+    font-style: italic;
+}
+
+#search-boxes{
+  text-align: center;
 }
 
 p {
