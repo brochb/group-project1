@@ -1,0 +1,19 @@
+*{
+
+}
+
+:root{
+ --light: white;
+}
+
+#search-container{
+    justify-content: center;
+}
+
+@media screen and (max-width: 992px) { 
+    
+  }
+
+@media screen and (max-width: 768px) { 
+
+  }
