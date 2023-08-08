@@ -16,18 +16,18 @@
 /* Begin Permanent css */
 
 h1 {
-    background-color: var(--firstcolor);
-    text-align: center;
-    color: var(--thirdcolor);
+  background-color: var(--fourthcolor);
+  text-align: center;
+  color: var(--thirdcolor);
 }
 
-#search-container {
-    text-align: center;
-    font-size: 20px;
+#search-container{
+  text-align: center;
+  font-size: 20px;
 }
 
-label {
-    font-style: bold;
+#search-boxes{
+  margin-bottom: 10px;
 }
 
 p {
@@ -35,23 +35,38 @@ p {
     font-size: large;
 }
 
+h3{
+  text-decoration: underline;
+}
+
+label{
+  font-style: bold;
+  justify-content: space-between;
+}
+
+p {
+  text-align: center;
+  font-size: large;
+}
+
 
 label:hover {
-    background-color: gray;
+  background-color: gray;
 }
 
 
-@media screen and (max-width: 992px) {
-    h1 {
-        background-color: var(--fifthcolor);
-        text-align: center;
-        color: var(--thirdcolor);
-    }
+@media screen and (max-width: 992px) { 
+  h1 {
+    background-color: var(--fifthcolor);
+    text-align: center;
+    color: var(--thirdcolor);
+  }
 }
 
-@media screen and (max-width: 768px) {
-    .book-item {
-        flex-direction: column;
-        width: 100%;
-    }
+@media screen and (max-width: 768px) { 
+  h1 {
+    background-color: var(--fifthcolor);
+    text-align: center;
+    color: var(--secondcolor);
+  }
 }
