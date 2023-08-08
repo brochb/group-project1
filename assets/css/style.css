@@ -26,11 +26,18 @@ h1 {
   font-size: 20px;
 }
 
+#search-boxes{
+  margin-bottom: 10px;
+}
+
+h3{
+  text-decoration: underline;
+}
+
 label{
   font-style: bold;
   justify-content: space-between;
 }
- 
 
 label:hover {
   background-color: gray;
