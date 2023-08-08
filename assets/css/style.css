@@ -30,6 +30,11 @@ label {
     font-style: bold;
 }
 
+p {
+    text-align: center;
+    font-size: large;
+}
+
 
 label:hover {
     background-color: gray;

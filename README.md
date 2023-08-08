@@ -7,6 +7,14 @@ To use the application, simply go to the deployed github page which can be found
 ** Easily save your favorite books by clicking the save button to store the best ones in your inventory!<br>
 **image of sample inventory**<br><br>
 
+** Here is an Example of the homepage showing you the drop down menus that can be selected from.
+![image](https://github.com/brochb/group-project1/assets/39662430/b66cbe67-33eb-4ef2-83ef-46cae02e859c)
+
+** Once you have selected you query parameters, you will automatically be navigated to the display page shown here.
+![image](https://github.com/brochb/group-project1/assets/39662430/ee4d4959-10fb-4abe-a7c3-70118d40a3d4)
+
+**From here you can select your favorites, and save them.
+
 As a user, I want to be able to search for book across the web, and be able to sort them
 by fiction/non fiction, by author, and subject matter.
 
