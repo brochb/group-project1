@@ -19,7 +19,8 @@ var searchButton = document.getElementById("search-button")
 
 //     if (selectedGenre === "Fiction") {
 //         // Add options for fiction sub-genres
-//         var fictionSubGenres = ["Horror", "Suspense", "Sci-Fi", "Fantasy"];
+//         var fictionSubGenres = ['Animals, Bugs & Pets', 'Art, Creativity & Music', 'General Literature', 
+// 'Hobbies, Sports & Outdoors', 'Science Fiction & Fantasy', 'Real Life', 'Science & Technology', 'Mystery & Suspense', 'Reference'];
 //         fictionSubGenres.forEach(function (subGenre) {
 //             var option = document.createElement("option");
 //             option.value = subGenre;
@@ -28,7 +29,8 @@ var searchButton = document.getElementById("search-button")
 //         });
 //     } else if (selectedGenre === "Nonfiction") {
 //         // Add options for nonfiction sub-genres
-//         var nonfictionSubGenres = ["Science", "Math", "History", "Literature", "Philosophy"];
+//         var nonfictionSubGenres = ['Animals, Bugs & Pets', 'Art, Creativity & Music', 'General Literature',
+//  'Hobbies, Sports & Outdoors', 'Science Fiction & Fantasy', 'Real Life', 'Science & Technology', 'Mystery & Suspense', 'Reference'];
 //         nonfictionSubGenres.forEach(function (subGenre) {
 //             var option = document.createElement("option");
 //             option.value = subGenre;
