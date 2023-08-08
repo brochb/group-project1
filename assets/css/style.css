@@ -30,6 +30,11 @@ h1 {
   margin-bottom: 10px;
 }
 
+p {
+    text-align: center;
+    font-size: large;
+}
+
 h3{
   text-decoration: underline;
 }
@@ -38,6 +43,12 @@ label{
   font-style: bold;
   justify-content: space-between;
 }
+
+p {
+  text-align: center;
+  font-size: large;
+}
+
 
 label:hover {
   background-color: gray;
