@@ -42,6 +42,7 @@ label:hover {
     background-color: var(--fifthcolor);
     text-align: center;
     color: var(--thirdcolor);
+  }
 }
 
 @media screen and (max-width: 768px) { 
