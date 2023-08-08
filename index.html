@@ -1,24 +1,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The Book Search Extraordinaire!</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
     <h1>The Book Search Extraordinaire!</h1>
-    <section name="fic-nonfic" id="search-container" autocomplete="off" required>
+    <p>What kind of book would you like to find?</p>
+    <section name="userinput" id="search-container" autocomplete="off" required>
         <select id="query-input">
-            <option value="Fiction">Fiction</option>
-            <option value="Nonfiction">Nonfiction</option>
+            <option value="fiction">Fiction</option>
+            <option value="nonfiction">Nonfiction</option>
         </select>
         <button id="search-button">Search</button>
 
     </section>
-
-    <section id="recipes-display"></section>
-
-
 
     <script src="./assets/javascript/script.js"></script>
 </body>
