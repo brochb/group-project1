@@ -97,6 +97,8 @@ function displayResults(results, page, resultsPerPage) {
         var title = book.title;
         var authors = book.authors.join(", ");
         var summary = book.summary;
+        // var coverImg = book.
+        console.log(book)
         // You can add more properties like author_first_names, author_last_names, etc., if needed.
 
         // Create a container for each book
