@@ -55,6 +55,8 @@ nextPageButton.addEventListener("click", function () {
     }
 });
 
+// add previous page button here
+
 function displayResults(results, page, resultsPerPage) {
     page = page || 1;
 
@@ -68,21 +70,26 @@ function displayResults(results, page, resultsPerPage) {
         var book = results.results[i];
         var title = book.title;
         var authors = book.authors.join(", ");
+        var summary = book.summary;
         // You can add more properties like author_first_names, author_last_names, etc., if needed.
 
         // Create a container for each book
         var bookContainer = document.createElement("div");
         bookContainer.classList.add("book-item");
 
-        // Create and append elements for title and authors
+        // Create and append elements for title, summary and authors
         var titleElement = document.createElement("h3");
         titleElement.textContent = title;
         var authorsElement = document.createElement("p");
         authorsElement.textContent = "Authors: " + authors;
+        var summaryElement = document.createElement("p");
+        summaryElement.textContent = summary;
 
-        // Append title and authors to the book container
+
+        // Append title, summary and authors to the book container
         bookContainer.appendChild(titleElement);
         bookContainer.appendChild(authorsElement);
+        bookContainer.appendChild(summaryElement);
 
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
