@@ -25,13 +25,8 @@ h1 {
   color: var(--thirdcolor);
 }
 
-#search-container{
-  text-align: center;
-  font-size: 20px;
-}
-
-#search-boxes{
-  margin-bottom: 10px;
+h2, h3 {
+  text-decoration: underline;
 }
 
 p {
@@ -39,27 +34,10 @@ p {
     font-size: large;
 }
 
-h3{
-  text-decoration: underline;
-  text-align: center;
 }
 
-label{
-  font-style: bold;
-  justify-content: space-between;
-}
-
-.placeholder{
-    font-style: italic;
-}
-
-#search-boxes{
-  text-align: center;
-}
-
-p {
-  text-align: center;
-  font-size: large;
+#search-boxes {
+  margin-bottom: 10px;
 }
 
 
@@ -86,5 +64,7 @@ input:hover {
 
 /* Results Header  Style*/
 header {
-  
+background-color: var(--secondcolor);
+color: white;
+padding: 3px;
 }
