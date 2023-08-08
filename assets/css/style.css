@@ -1,19 +1,52 @@
-/* Example style for the book items  in the results.html file for debuggin purposes*/
 .book-item {
     border: 1px solid #000000;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-/* Begin Permanent css */
-
-h1 {background-color: #8c5626;
-    color: #f2e8dc;
-    text-align: center;
+:root {
+    --firstcolor: #d9a441;
+    --secondcolor: #BF843B;
+    --thirdcolor: #f2e8dc;
+    --fourthcolor: #8c5626;
+    --fifthcolor: #593719;
 }
 
-p {background-color: #8c5626;
-    color: #f2e8dc;
-    text-align: center;
 
+/* Begin Permanent css */
+
+h1 {
+    background-color: var(--firstcolor);
+    text-align: center;
+    color: var(--thirdcolor);
+}
+
+#search-container {
+    text-align: center;
+    font-size: 20px;
+}
+
+label {
+    font-style: bold;
+}
+
+
+label:hover {
+    background-color: gray;
+}
+
+
+@media screen and (max-width: 992px) {
+    h1 {
+        background-color: var(--fifthcolor);
+        text-align: center;
+        color: var(--thirdcolor);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .book-item {
+        flex-direction: column;
+        width: 100%;
+    }
 }

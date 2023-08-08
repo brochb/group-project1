@@ -9,7 +9,7 @@ if (!searchResults || !searchResults.results || searchResults.results.length ===
 
 // Set the initial page number and results per page
 var currentPage = 1;
-var resultsPerPage = 25;
+var resultsPerPage = 100;
 var filteredResults = searchResults.results; // Initialize filteredResults with all results
 
 // Display the first set of results
