@@ -37,6 +37,7 @@ p {
 
 h3{
   text-decoration: underline;
+  text-align: center;
 }
 
 label{
@@ -50,7 +51,7 @@ p {
 }
 
 
-label:hover {
+input:hover {
   background-color: gray;
 }
 
