@@ -1,15 +1,15 @@
 .book-item {
-  border: 1px solid #000000;
-  padding: 10px;
-  margin-bottom: 10px;
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
-:root{
-  --firstcolor: #d9a441;
-  --secondcolor: #BF843B;
-  --thirdcolor: #f2e8dc;
-  --fourthcolor: #8c5626;
-  --fifthcolor: #593719;
+:root {
+    --firstcolor: #d9a441;
+    --secondcolor: #BF843B;
+    --thirdcolor: #f2e8dc;
+    --fourthcolor: #8c5626;
+    --fifthcolor: #593719;
 }
 
 
@@ -42,7 +42,6 @@ label:hover {
     background-color: var(--fifthcolor);
     text-align: center;
     color: var(--thirdcolor);
-  }
 }
 
 @media screen and (max-width: 768px) { 
