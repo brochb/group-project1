@@ -16,7 +16,7 @@
 /* Begin Permanent css */
 
 h1 {
-  background-color: var(--firstcolor);
+  background-color: var(--fourthcolor);
   text-align: center;
   color: var(--thirdcolor);
 }
@@ -28,6 +28,7 @@ h1 {
 
 label{
   font-style: bold;
+  justify-content: space-between;
 }
  
 
@@ -45,8 +46,9 @@ label:hover {
 }
 
 @media screen and (max-width: 768px) { 
-  .book-item{
-    flex-direction: column;
-    width: 100%;
+  h1 {
+    background-color: var(--fifthcolor);
+    text-align: center;
+    color: var(--secondcolor);
   }
 }
