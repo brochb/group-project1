@@ -1,3 +1,7 @@
+*{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .book-item {
     border: 1px solid #000000;
     padding: 10px;
@@ -30,9 +34,6 @@ p {
     font-size: large;
 }
 
-#search-container {
-  text-align: center;
-  font-size: 20px;
 }
 
 #search-boxes {
@@ -40,13 +41,7 @@ p {
 }
 
 
-label {
-  font-style: bold;
-  justify-content: space-between;
-}
-
-
-label:hover {
+input:hover {
   background-color: gray;
 }
 
