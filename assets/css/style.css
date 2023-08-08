@@ -1,19 +1,19 @@
-*{
+* {
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .book-item {
-    border: 1px solid #000000;
-    padding: 10px;
-    margin-bottom: 10px;
+  border: 1px solid #000000;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 :root {
-    --firstcolor: #d9a441;
-    --secondcolor: #BF843B;
-    --thirdcolor: #f2e8dc;
-    --fourthcolor: #8c5626;
-    --fifthcolor: #593719;
+  --firstcolor: #d9a441;
+  --secondcolor: #BF843B;
+  --thirdcolor: #f2e8dc;
+  --fourthcolor: #8c5626;
+  --fifthcolor: #593719;
 }
 
 
@@ -25,15 +25,14 @@ h1 {
   color: var(--thirdcolor);
 }
 
-h2, h3 {
+h2,
+h3 {
   text-decoration: underline;
 }
 
 p {
-    text-align: center;
-    font-size: large;
-}
-
+  text-align: center;
+  font-size: large;
 }
 
 #search-boxes {
@@ -46,7 +45,7 @@ input:hover {
 }
 
 
-@media screen and (max-width: 992px) { 
+@media screen and (max-width: 992px) {
   h1 {
     background-color: var(--fifthcolor);
     text-align: center;
@@ -54,7 +53,7 @@ input:hover {
   }
 }
 
-@media screen and (max-width: 768px) { 
+@media screen and (max-width: 768px) {
   h1 {
     background-color: var(--fifthcolor);
     text-align: center;
@@ -64,7 +63,16 @@ input:hover {
 
 /* Results Header  Style*/
 header {
-background-color: var(--secondcolor);
-color: white;
-padding: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--fourthcolor);
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+header div {
+  margin: 0px 30px 10px 0px;
+  color: black;
 }
