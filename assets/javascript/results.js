@@ -1,7 +1,19 @@
 // Retrieve the search results from the session storage
 var searchResults = JSON.parse(sessionStorage.getItem('searchResults'));
+var weatherData = JSON.parse(sessionStorage.getItem('weatherData'));
+var tempFarenheit = ((weatherData.main.feels_like - 273.15) * 9 / 5 + 32).toFixed(0);
+var sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString();
+var sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
+var desciption = weatherData.weather[0].description
+var city = weatherData.name
 
-console.log(searchResults)
+// Update the HTML elements with weather information
+var descriptionElement = document.getElementById("description");
+var sunElement = document.getElementById("sunrise-sunset");
+
+// Display weather information in the HTML elements
+descriptionElement.textContent = 'You are in ' + city + ' and it currently feels like: ' + tempFarenheit + '°F';
+sunElement.textContent = 'Sunrise: ' + sunrise + ' / Sunset: ' + sunset;
 
 // Check if there are any results in the session storage
 if (!searchResults || !searchResults.results || searchResults.results.length === 0) {
@@ -94,7 +106,7 @@ function fetchNextPage() {
     myHeaders.append("X-RapidAPI-Key", "203d6f8221msh723786e2656b6a5p1512adjsn9cc9321e6473");
     myHeaders.append("X-RapidAPI-Host", "book-finder1.p.rapidapi.com");
 
-    var apiUrl = `https://book-finder1.p.rapidapi.com/api/search?book_type=${searchResults.book_type}&page=${currentPage}&results_per_page=${resultsPerPage}`;
+    var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=${searchResults.book_type}&page=${currentPage}&results_per_page=${resultsPerPage}';
 
     var requestOptions = {
         method: 'GET',
@@ -115,4 +127,3 @@ function fetchNextPage() {
         .catch(error => console.log('error', error));
 }
 
-// Dan is the best
