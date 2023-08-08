@@ -61,3 +61,10 @@ input:hover {
     color: var(--secondcolor);
   }
 }
+
+/* Results Header  Style*/
+header {
+background-color: var(--secondcolor);
+color: white;
+padding: 3px;
+}
