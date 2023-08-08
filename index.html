@@ -1,25 +1,48 @@
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The Book Search Extraordinaire!</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-    <section id="search-container">
-        <input type="text" id="query-input" placeholder="Enter your search query">
-        <button id="search-button">Search</button>
+    <h1>The Book Search Extraordinaire!</h1>
+    <section name="fic-nonfic" id="search-container" autocomplete="off" required>
+        <select id="query-input">
+            <option value="Fiction">Fiction</option>
+            <option value="Nonfiction">Nonfiction</option>
+        </select>
 
-        <div id="text-box-2"></div> <!--auto complete text box for search by popular ingredients-->
-        <button id="search-btn"></button>
-        <button id=""></button>
+        <!-- Add the queryCategory input box -->
+        <label for="queryCategory">Query Category:</label>
+        <select id="queryCategory">
+            <option value="">Select Category</option> <!-- Blank option, won't affect the apiUrl -->
+            <option value="Fiction, Non-fiction & Poetry">Fiction, Non-fiction & Poetry</option>
+            <option value="Science Fiction & Fantasy">Science Fiction & Fantasy</option>
+            <option value="Real Life">Real Life</option>
+            <option value="Mystery & Suspense">Mystery & Suspense</option>
+            <option value="Hobbies, Sports & Outdoors">Hobbies, Sports & Outdoors</option>
+            <option value="Animals, Bugs & Pets">Animals, Bugs & Pets</option>
+            <option value="Science & Technology">Science & Technology</option>
+            <option value="Art, Creativity & Music">Art, Creativity & Music</option>
+            <option value="General Literature">General Literature</option>
+            <option value="Reference">Reference</option>
+        </select>
+
+        <!-- Add the query input boxes for the author's first and last name (optional) -->
+        <label for="author-first-name">Author's First Name:</label>
+        <input type="text" id="author-first-name">
+
+        <label for="author-last-name">Author's Last Name:</label>
+        <input type="text" id="author-last-name">
+
+        <button id="search-button">Search</button>
     </section>
 
     <section id="recipes-display"></section>
 
-
-
     <script src="./assets/javascript/script.js"></script>
 </body>
-
 </html>

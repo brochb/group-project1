@@ -7,11 +7,53 @@ myHeaders.append("X-RapidAPI-Host", "book-finder1.p.rapidapi.com");
 // var ingredientsSearch = document.getElementById("text-box-2")
 var searchButton = document.getElementById("search-button")
 
+// // Get references to the dropdowns
+// var genreDropdown = document.getElementById("query-input");
+// var subGenreDropdown = document.createElement("select");
+// subGenreDropdown.id = "sub-genre-input";
+
+// // Function to populate the sub-genre dropdown based on the selected genre
+// function populateSubGenreDropdown() {
+//     var selectedGenre = genreDropdown.value;
+//     subGenreDropdown.innerHTML = ""; // Clear previous options
+
+//     if (selectedGenre === "Fiction") {
+//         // Add options for fiction sub-genres
+//         var fictionSubGenres = ["Horror", "Suspense", "Sci-Fi", "Fantasy"];
+//         fictionSubGenres.forEach(function (subGenre) {
+//             var option = document.createElement("option");
+//             option.value = subGenre;
+//             option.text = subGenre;
+//             subGenreDropdown.appendChild(option);
+//         });
+//     } else if (selectedGenre === "Nonfiction") {
+//         // Add options for nonfiction sub-genres
+//         var nonfictionSubGenres = ["Science", "Math", "History", "Literature", "Philosophy"];
+//         nonfictionSubGenres.forEach(function (subGenre) {
+//             var option = document.createElement("option");
+//             option.value = subGenre;
+//             option.text = subGenre;
+//             subGenreDropdown.appendChild(option);
+//         });
+//     }
+
+//     // Append the sub-genre dropdown to the section
+//     var searchContainer = document.getElementById("search-container");
+//     searchContainer.appendChild(subGenreDropdown);
+// }
+
+// // Event listener for the genre dropdown
+// genreDropdown.addEventListener("change", populateSubGenreDropdown);
+
 searchButton.addEventListener("click", function () {
     var queryInput = document.getElementById("query-input").value;
-    if (queryInput.trim() !== "") {
+    var queryCategory = document.getElementById("queryCategory").value;
 
-        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput;
+    if (queryInput.trim() !== "") {
+        // Modify the apiUrl to include the selected queryCategory
+        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&' + queryCategory + '&page=1&results_per_page=100';
+
+        console.log(apiUrl)
 
         var requestOptions = {
             method: 'GET',
@@ -21,7 +63,12 @@ searchButton.addEventListener("click", function () {
 
         fetch(apiUrl, requestOptions)
             .then(response => response.json())
-            .then(result => console.log(result))
+            .then(result => {
+                // Save the results in the session storage before redirecting
+                sessionStorage.setItem('searchResults', JSON.stringify(result));
+                // Redirect to the results page
+                window.location.href = "results.html";
+            })
             .catch(error => console.log('error', error));
     } else {
         // In case the input is empty
