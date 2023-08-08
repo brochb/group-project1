@@ -47,9 +47,13 @@ var searchButton = document.getElementById("search-button")
 
 searchButton.addEventListener("click", function () {
     var queryInput = document.getElementById("query-input").value;
-    if (queryInput.trim() !== "") {
+    var queryCategory = document.getElementById("queryCategory").value;
 
-        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&page=1&results_per_page=100';
+    if (queryInput.trim() !== "") {
+        // Modify the apiUrl to include the selected queryCategory
+        var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&' + queryCategory + '&page=1&results_per_page=100';
+
+        console.log(apiUrl)
 
         var requestOptions = {
             method: 'GET',
