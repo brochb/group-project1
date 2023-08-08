@@ -76,3 +76,32 @@ header div {
   margin: 0px 30px 10px 0px;
   color: black;
 }
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.pagination-links {
+  display: flex;
+  align-items: center; /* Center vertically within the flex container */
+}
+
+.pagination-links button,
+.pagination-links a {
+  margin-right: 10px; /* Add space between the button and links */
+  text-decoration: none;
+  color: var(--firstcolor);
+  border: 1px solid var(--firstcolor);
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.pagination-links button:hover,
+.pagination-links a:hover {
+  background-color: var(--firstcolor);
+  color: white;
+}

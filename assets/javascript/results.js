@@ -7,6 +7,9 @@ var sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
 var description = weatherData.weather[0].description
 var city = weatherData.name
 
+var oldApiUrl = sessionStorage.getItem('apiUrl');
+console.log(oldApiUrl);
+
 // Update the HTML elements with weather information
 var descriptionElement = document.getElementById("description");
 var sunElement = document.getElementById("sunrise-sunset");
@@ -73,20 +76,12 @@ searchButton.addEventListener("click", function () {
         return matchFirstName && matchLastName && matchSubcategory;
     });
 
-    // Call the displayResults function with the filtered results and reset the page to 1
-    displayResults({ results: filteredResults, total_results: filteredResults.length }, 1, resultsPerPage);
-});
+    // Display the first set of results
+    displayResults(searchResults, currentPage, resultsPerPage);
 
-// Display the next page of results when the "Next Page" button is clicked
-var nextPageButton = document.getElementById("next-page-button");
-nextPageButton.addEventListener("click", function () {
-    if (currentPage < Math.ceil(searchResults.total_results / resultsPerPage)) {
-        currentPage++;
-        fetchNextPage();
-    }
+    // Call fetchNextPage to fetch the next set of results
+    fetchNextPage();
 });
-
-// add previous page button here
 
 function displayResults(results, page, resultsPerPage) {
     page = page || 1;
@@ -127,12 +122,41 @@ function displayResults(results, page, resultsPerPage) {
     }
 }
 
-function fetchNextPage() {
-    var myHeaders = new Headers();
-    myHeaders.append("X-RapidAPI-Key", "203d6f8221msh723786e2656b6a5p1512adjsn9cc9321e6473");
-    myHeaders.append("X-RapidAPI-Host", "book-finder1.p.rapidapi.com");
+var history = document.getElementById("history")
+var historyList = document.getElementById("history-list")
 
-    var apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=${searchResults.book_type}&page=${currentPage}&results_per_page=${resultsPerPage}';
+// Trying a new approach for the updated API URL because I was having issues copying the original search
+function updatePageNumberInApiUrl(oldApiUrl, newPageNumber) {
+    // Split the oldApiUrl into parts using the '&' delimiter
+    var urlParts = oldApiUrl.split('&');
+
+    // Find and update the part containing the 'page' parameter
+    for (var i = 0; i < urlParts.length; i++) {
+        if (urlParts[i].startsWith('page=')) {
+            urlParts[i] = 'page=' + newPageNumber;
+            break; // Exit the loop after updating the parameter
+        }
+    }
+
+    // Join the parts back together using the '&' delimiter
+    var newApiUrl = urlParts.join('&');
+
+    return newApiUrl;
+}
+
+// Update oldApiUrl to page 2 (I checked the AP URL in Postman and it works perfectly)
+var newPageNumber = 2;
+var updatedApiUrl = updatePageNumberInApiUrl(oldApiUrl, newPageNumber);
+console.log(updatedApiUrl);
+
+function fetchNextPage() {
+    var totalResults = filteredResults.length;
+    var totalPages = Math.ceil(totalResults / resultsPerPage);
+
+    console.log(totalPages); // Debugging
+
+    var newPageNumber = currentPage + 1;
+    var updatedApiUrl = updatePageNumberInApiUrl(oldApiUrl, newPageNumber);
 
     var requestOptions = {
         method: 'GET',
@@ -140,16 +164,33 @@ function fetchNextPage() {
         redirect: 'follow'
     };
 
-    fetch(apiUrl, requestOptions)
+    fetch(updatedApiUrl, requestOptions)
         .then(response => response.json())
         .then(result => {
-            // Save the new results in the session storage
+            // Update the searchResults with the new page results
             searchResults = result;
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
-            // Call the displayResults function with the new results and updated page number
+            // Update currentPage and display the new set of results
+            currentPage = newPageNumber;
             displayResults(searchResults, currentPage, resultsPerPage);
         })
         .catch(error => console.log('error', error));
+
+        
+
 }
 
+// fetch(apiUrl, requestOptions)
+//             .then(response => response.json())
+//             .then(result => {
+//                 // Save the results in the session storage before redirecting
+//                 sessionStorage.setItem('searchResults', JSON.stringify(result));
+//                 // Redirect to the results page
+//                 window.location.href = "results.html";
+//             })
+//             .catch(error => console.log('error', error));
+//     } else {
+//         // In case the input is empty
+//         console.log("Please enter a valid search query.");
+//     }
