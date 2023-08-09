@@ -78,12 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
         link.href = '#';
-        console.log(query)
-        console.log(typeof query)
-        link.textContent = query.join(' ');
+        // Convert query object properties to an array
+        const queryArray = Object.values(query);
+        link.textContent = queryArray.join(' ');
 
         link.addEventListener('click', function () {
-            const [value1, value2, value3, value4] = query;
+            const [value1, value2, value3, value4] = queryArray;
             document.getElementById('query-input').value = value1;
             document.getElementById('queryCategory').value = value2;
             document.getElementById('author-first-name').value = value3;
@@ -95,28 +95,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-    searchButton.addEventListener('click', function () {
-        // Get the user's location before making the search
-        getUserLocationAndSearch();
-        // Create variables for the user inputs
-        const dropdown1 = document.getElementById('query-input');
-        const dropdown2 = document.getElementById('queryCategory');
-        const input1 = document.getElementById('author-first-name');
-        const input2 = document.getElementById('author-last-name');
+searchButton.addEventListener('click', function () {
+    // Get the user's location before making the search
+    getUserLocationAndSearch();
+    // Create variables for the user inputs
+    const dropdown1 = document.getElementById('query-input');
+    const dropdown2 = document.getElementById('queryCategory');
+    const input1 = document.getElementById('author-first-name');
+    const input2 = document.getElementById('author-last-name');
 
-        // Set the value of each of the created variables to the user inputs
-        const selectedValue1 = dropdown1.value;
-        const selectedValue2 = dropdown2.value;
-        const selectedValue3 = input1.value;
-        const selectedValue4 = input2.value;
+    // Set the value of each of the created variables to the user inputs
+    const selectedValue1 = dropdown1.value;
+    const selectedValue2 = dropdown2.value;
+    const selectedValue3 = input1.value;
+    const selectedValue4 = input2.value;
 
 
-        // Create an array with the combined values selected by the user
-        const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4];
-    
-        let queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
-        queryHistory.push(combinedValues);
-        if (queryHistory.length > 5) queryHistory.shift();
-        localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
-    });
+    // Create an array with the combined values selected by the user
+    const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4];
+
+    let queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
+    queryHistory.push(combinedValues);
+    if (queryHistory.length > 5) queryHistory.shift();
+    localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
+});
 
