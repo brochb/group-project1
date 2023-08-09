@@ -78,12 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
         link.href = '#';
-<<<<<<<<< Temporary merge branch 1
-=========
         console.log(query)
         console.log(typeof query)
         link.textContent = query.join(' ');
->>>>>>>>> Temporary merge branch 2
 
         link.addEventListener('click', function () {
             const [value1, value2, value3, value4] = query;
