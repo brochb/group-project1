@@ -42,7 +42,7 @@ function successCallback(position) {
 
         // Store the apiUrl in session storage
         sessionStorage.setItem('apiUrl', apiUrl);
-        
+
         var requestOptions = {
             method: 'GET',
             headers: myHeaders,
@@ -57,15 +57,8 @@ function successCallback(position) {
                 // Save the results in the session storage before redirecting
                 sessionStorage.setItem('searchResults', JSON.stringify(result));
                 // Redirect to the results page
-                window.location.href = "results.html?total_results=" + result.total_results + "&total_pages=" + result.total_pages;
-
-                console.log(result) // Debug
-                console.log('----------------------------')
-                console.log('total_results:', result.total_results);
-                console.log('total_pages:', result.total_pages);
-                console.log(typeof result.total_pages);
+                window.location.href = "results.html";
             })
-
             .catch(error => console.log('error', error));
     } else {
         // In case the input is empty
@@ -81,16 +74,16 @@ function errorCallback(error) {
 // Function on page load, pull the localStorage, and append it to the history
 document.addEventListener('DOMContentLoaded', function () {
     const historyList = document.getElementById('history-list');
-    const combinedValues = JSON.parse(localStorage.getItem('combinedValues'));
+    const queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
 
-    if (combinedValues) {
-        const { value1, value2, value3, value4 } = combinedValues;
-
+    queryHistory.forEach(query => {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
         link.href = '#';
-        link.textContent = value1 + " " + value2 + " " + value3 + " " + value4;
+        link.textContent = query.join(' ');
+
         link.addEventListener('click', function () {
+            const [value1, value2, value3, value4] = query;
             document.getElementById('query-input').value = value1;
             document.getElementById('queryCategory').value = value2;
             document.getElementById('author-first-name').value = value3;
@@ -99,35 +92,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
         listItem.appendChild(link);
         historyList.appendChild(listItem);
-    }
+    });
 });
 
-searchButton.addEventListener("click", function () {
+    searchButton.addEventListener('click', function () {
+        // Get the user's location before making the search
+        getUserLocationAndSearch();
+        // Create variables for the user inputs
+        const dropdown1 = document.getElementById('query-input');
+        const dropdown2 = document.getElementById('queryCategory');
+        const input1 = document.getElementById('author-first-name');
+        const input2 = document.getElementById('author-last-name');
+
+        // Set the value of each of the created variables to the user inputs
+        const selectedValue1 = dropdown1.value;
+        const selectedValue2 = dropdown2.value;
+        const selectedValue3 = input1.value;
+        const selectedValue4 = input2.value;
+
+
+        // Create an array with the combined values selected by the user
+        const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4];
     
-    // Create variables for the user inputs
-    const dropdown1 = document.getElementById('query-input');
-    const dropdown2 = document.getElementById('queryCategory');
-    const input1 = document.getElementById('author-first-name')
-    const input2 = document.getElementById('author-last-name')
-    
-    // Set the value of each of the created variables to the user inputs
-    const selectedValue1 = dropdown1.value;
-    const selectedValue2 = dropdown2.value;
-    const selectedValue3 = input1.value;
-    const selectedValue4 = input2.value;
-    
-    // Create a variable for the combined valued selected by the user
-    const newQuery = { value1: selectedValue1, value2: selectedValue2, value3: selectedValue3, value4: selectedValue4 };
-    localStorage.setItem('combinedValues', JSON.stringify(newQuery));
-    
-    // initialize an empty array where the newQuery will be stored up to to the last 5
-    let queryHistory = [];
-    queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
-    queryHistory.push(newQuery);
-    if (queryHistory.length > 5) queryHistory.shift();
-    localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
-    
-    // Get the user's location before making the search
-    getUserLocationAndSearch();
-});
+        let queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
+        queryHistory.push(combinedValues);
+        if (queryHistory.length > 5) queryHistory.shift();
+        localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
+    });
 
