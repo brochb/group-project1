@@ -1,19 +1,19 @@
-*{
+* {
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .book-item {
-    border: 1px solid #000000;
-    padding: 10px;
-    margin-bottom: 10px;
+  border: 1px solid #000000;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 :root {
-    --firstcolor: #d9a441;
-    --secondcolor: #BF843B;
-    --thirdcolor: #f2e8dc;
-    --fourthcolor: #8c5626;
-    --fifthcolor: #593719;
+  --firstcolor: #d9a441;
+  --secondcolor: #BF843B;
+  --thirdcolor: #f2e8dc;
+  --fourthcolor: #8c5626;
+  --fifthcolor: #593719;
 }
 
 
@@ -43,13 +43,20 @@ p {
   margin-bottom: 10px;
 }
 
+.append-img{
+  display: block;
+  margin: auto;
+  width: 10%;
+}
+
+
 
 input:hover {
   background-color: gray;
 }
 
 
-@media screen and (max-width: 992px) { 
+@media screen and (max-width: 992px) {
   h1 {
     background-color: var(--fifthcolor);
     text-align: center;
@@ -57,10 +64,55 @@ input:hover {
   }
 }
 
-@media screen and (max-width: 768px) { 
+@media screen and (max-width: 768px) {
   h1 {
     background-color: var(--fifthcolor);
     text-align: center;
     color: var(--secondcolor);
   }
+}
+
+/* Results Header  Style*/
+header {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--fourthcolor);
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+header div {
+  margin: 0px 30px 10px 0px;
+  color: black;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.pagination-links {
+  display: flex;
+  align-items: center; /* Center vertically within the flex container */
+}
+
+.pagination-links button,
+.pagination-links a {
+  margin-right: 10px; /* Add space between the button and links */
+  text-decoration: none;
+  color: var(--firstcolor);
+  border: 1px solid var(--firstcolor);
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.pagination-links button:hover,
+.pagination-links a:hover {
+  background-color: var(--firstcolor);
+  color: white;
 }
