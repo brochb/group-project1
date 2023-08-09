@@ -14,11 +14,25 @@
   --thirdcolor: #f2e8dc;
   --fourthcolor: #8c5626;
   --fifthcolor: #593719;
+  --light: white;
+  --dark: black;
+}
+
+ul{
+  list-style-type: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.github:hover{
+  color: blue;
+  background-color: gray;
 }
 
 body{
   background-color: var(--thirdcolor);
 }
+
 /* Begin Permanent css */
 
 h1 {
@@ -29,6 +43,11 @@ h1 {
 
 h2 {
   text-decoration: underline;
+  font-size: 35px;
+}
+
+#search-container {
+  text-align: center;
 }
 
 h3{
@@ -43,6 +62,7 @@ p {
 
 #search-boxes {
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .append-img{
@@ -79,15 +99,16 @@ header {
   display: flex;
   flex-wrap: wrap;
   background-color: var(--fourthcolor);
-  color: white;
+  color: var(--light);
   padding: 10px;
   margin-bottom: 10px;
   line-height: 1.5;
+  justify-content: center;
 }
 
 header div {
   margin: 0px 30px 10px 0px;
-  color: black;
+  color: var(--light);
 }
 
 .pagination {
@@ -116,5 +137,5 @@ header div {
 .pagination-links button:hover,
 .pagination-links a:hover {
   background-color: var(--firstcolor);
-  color: white;
+  color: var(--light);
 }
