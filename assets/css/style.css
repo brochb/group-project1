@@ -16,7 +16,9 @@
   --fifthcolor: #593719;
 }
 
-
+body{
+  background-color: var(--thirdcolor);
+}
 /* Begin Permanent css */
 
 h1 {
