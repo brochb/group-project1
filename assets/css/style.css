@@ -121,11 +121,11 @@ header div {
 }
 
 #history-search {
-  width: 40%;
+  width: 35%;
 }
 
 #saved-search {
-  width: 60%;
+  width: 65%;
 }
 
 .pagination {
@@ -164,6 +164,12 @@ header div {
 }
 
 .book-container {
-  padding: 10px 0px 10px 0px;
+  padding: 10px 3px 10px 3px;
   border: #000000 solid 1px;
+}
+
+.book-container li {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: start;
 }
