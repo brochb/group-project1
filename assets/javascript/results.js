@@ -15,12 +15,16 @@ var urlParams = new URLSearchParams(window.location.search);
 var totalResults = urlParams.get('total_results');
 var totalPages = urlParams.get('total_pages');
 
+// Format the numbers with commas as thousands separators
+var formattedTotalResults = parseInt(totalResults).toLocaleString();
+var formattedTotalPages = parseInt(totalPages).toLocaleString();
+
 // Update the HTML elements with the totalResults and totalPages values
 var totalResultsElement = document.getElementById("total-results");
 var totalPagesElement = document.getElementById("total-pages");
 
-totalResultsElement.textContent = totalResults;
-totalPagesElement.textContent = totalPages;
+totalResultsElement.textContent = formattedTotalResults;
+totalPagesElement.textContent = formattedTotalPages;
 
 var oldApiUrl = sessionStorage.getItem('apiUrl');
 
@@ -149,19 +153,48 @@ function displayResults(results, page, resultsPerPage) {
         }
         var bookImgElement = document.createElement("img");
         bookImgElement.setAttribute("src", coverImg);
-        bookImgElement.setAttribute("class", "append-img")
+        bookImgElement.setAttribute("class", "append-img");
 
+        // Create a checkbox for each book
+        var checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("class", "book-checkbox");
+        checkbox.setAttribute("data-index", i); // Store the index of the book
 
-        // Append title, summary and authors to the book container
+        // Append title, summary, authors, and checkboxes to the book container
         bookContainer.appendChild(titleElement);
         bookContainer.appendChild(bookImgElement)
         bookContainer.appendChild(authorsElement);
         bookContainer.appendChild(summaryElement);
+        bookContainer.appendChild(checkbox);
 
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
     }
 }
+
+// Add event listeners for checkboxes
+var checkboxes = document.querySelectorAll(".book-checkbox");
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function () {
+        var index = parseInt(this.getAttribute("data-index"));
+        var selectedBook = searchResults.results[index];
+
+        if (this.checked) {
+            // Add the selected book to localStorage
+            var selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks.push(selectedBook);
+            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        } else {
+            // Remove the selected book from localStorage
+            var selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks = selectedBooks.filter(function (book) {
+                return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+            });
+            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        }
+    });
+});
 
 var history = document.getElementById("history")
 var historyList = document.getElementById("history-list")

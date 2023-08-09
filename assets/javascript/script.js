@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         listItem.appendChild(link);
         historyList.appendChild(listItem);
+        
     });
 });
 
@@ -121,3 +122,9 @@ searchButton.addEventListener('click', function () {
     localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
 });
 
+// Add event listener for the "Clear Selection" button
+var clearSelectionButton = document.getElementById("clear-selection-button");
+clearSelectionButton.addEventListener("click", function () {
+    // Clear selected books from localStorage
+    localStorage.removeItem('selectedBooks');
+});
