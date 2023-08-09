@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.href = '#';
         console.log(query)
         console.log(typeof query)
-        // link.textContent = query.join(' ');
+        link.textContent = query.join(' ');
 
         link.addEventListener('click', function () {
             const [value1, value2, value3, value4] = query;
