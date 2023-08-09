@@ -110,6 +110,24 @@ header div {
   color: var(--light);
 }
 
+#history {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#history-list {
+  display: block;
+  text-align: left;
+}
+
+#history-search {
+  width: 40%;
+}
+
+#saved-search {
+  width: 60%;
+}
+
 .pagination {
   display: flex;
   flex-wrap: wrap;

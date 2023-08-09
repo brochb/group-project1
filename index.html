@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
     <title>The Book Search Extraordinaire!</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
@@ -47,18 +48,25 @@
     </section>
 
     <section id="history">
-        <h2>History:</h2>
-        <ul id="history-list"></ul>
-        
+        <div id="history-search">
+            <h2>History:</h2>
+            <ul id="history-list"></ul>
+        </div>
+
+        <div id="saved-search">
+            <h2>Saved Books From Search:</h2>
+            <ul id="inventory"></ul>
+            <button id="clear-selection-button">Clear Selection</button>
+        </div>
 
     </section>
     <footer class="footer">
         <h2></h2>
         <ul>
             <li>
-                Contact 
+                Contact
             </li>
-            <li class= "github" style=" text-decoration: underline;">
+            <li class="github" style=" text-decoration: underline;">
                 <a href="https://github.com/brochb/group-project1">Github</a>
             </li>
         </ul>
@@ -69,4 +77,5 @@
 
     <script src="./assets/javascript/script.js"></script>
 </body>
+
 </html>
