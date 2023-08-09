@@ -9,6 +9,7 @@ var city = weatherData.name
 var today = dayjs().unix()
 
 
+
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
 var totalResults = urlParams.get('total_results');
