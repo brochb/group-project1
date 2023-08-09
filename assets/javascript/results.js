@@ -136,8 +136,13 @@ function displayResults(results, page, resultsPerPage) {
         titleElement.textContent = title;
         var authorsElement = document.createElement("p");
         authorsElement.textContent = "Authors: " + authors;
+        authorsElement.setAttribute("style", "color: blue; text-decoration: " )
         var summaryElement = document.createElement("p");
-        summaryElement.textContent = summary;
+        if(summary == ""){
+            summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
+        }else{  
+            summaryElement.textContent = summary;
+        }
         var bookImgElement = document.createElement("img");
         bookImgElement.setAttribute("src", coverImg);
         bookImgElement.setAttribute("class", "append-img")
