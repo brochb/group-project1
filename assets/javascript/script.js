@@ -36,10 +36,12 @@ function successCallback(position) {
     // Make API call to Book Finder API
     var queryInput = document.getElementById("query-input").value;
     var queryCategory = document.getElementById("queryCategory").value;
+    var minLexile = document.getElementById("min-lexile").value;
+    var maxLexile = document.getElementById("max-lexile").value;
 
     if (queryInput.trim() !== "") {
         // Modify the apiUrl to include the selected queryCategory
-        apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&' + queryCategory + '&page=1&results_per_page=100';
+        apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&' + queryCategory + '=&lexile_min=' + minLexile + '&lexile_max=' + maxLexile + '&page=1&results_per_page=100';
 
         // Store the apiUrl in session storage
         sessionStorage.setItem('apiUrl', apiUrl);
@@ -132,8 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const [value1, value2, value3, value4] = queryArray;
             document.getElementById('query-input').value = value1;
             document.getElementById('queryCategory').value = value2;
-            document.getElementById('author-first-name').value = value3;
-            document.getElementById('author-last-name').value = value4;
+            document.getElementById('min-lexile').value = value3;
+            document.getElementById('max-lexile').value = value4;
         });
 
         listItem.appendChild(link);
@@ -151,8 +153,8 @@ searchButton.addEventListener('click', function () {
     // Create variables for the user inputs
     const dropdown1 = document.getElementById('query-input');
     const dropdown2 = document.getElementById('queryCategory');
-    const input1 = document.getElementById('author-first-name');
-    const input2 = document.getElementById('author-last-name');
+    const input1 = document.getElementById('min-lexile');
+    const input2 = document.getElementById('max-lexile');
 
     // Set the value of each of the created variables to the user inputs
     const selectedValue1 = dropdown1.value;

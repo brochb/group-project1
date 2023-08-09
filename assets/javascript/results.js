@@ -47,7 +47,7 @@ if (today >= weatherData.sys.sunrise && today < weatherData.sys.sunset) {
             weatherMessageElement.textContent = 'Though the heat might swarm, do not dismay, grab a book and some shade, let time sway. With words that enthrall and a cool cover`s aid, the weather`s just a backdrop to the adventure portrayed!';
         } else if (tempFarenheit > 90) {
             weatherMessageElement.textContent = 'As the warmth wraps around, no need to screech, on a sandy beach or couch, a good book is in reach. With waves or cushions as your backdrop, just choose, adventure awaits in whichever setting you use!';
-        } else if (tempFarenheit < 65 && tempFarenheit >= 45) {
+        } else if (tempFarenheit < 60 && tempFarenheit >= 45) {
             weatherMessageElement.textContent = 'By the firepit`s glow or under a blanket so neat, a book`s soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!';
         } else {
             weatherMessageElement.textContent = 'Though it is chilly out there, no reason to freeze, beside the fire`s warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!';
