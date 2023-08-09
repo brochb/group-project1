@@ -162,3 +162,8 @@ header div {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.book-container {
+  padding: 10px 0px 10px 0px;
+  border: #000000 solid 1px;
+}

@@ -70,6 +70,30 @@ function errorCallback(error) {
     console.log('Error getting user location:', error.message);
 }
 
+function displaySelectedBooksFromLocalStorage() {
+    var inventoryElement = document.getElementById("inventory");
+    inventoryElement.innerHTML = ""; // Clear previous inventory
+
+    var selectedBooksFromLocal = JSON.parse(localStorage.getItem('selectedBooks'));
+
+    if (selectedBooksFromLocal && selectedBooksFromLocal.length > 0) {
+        selectedBooksFromLocal.forEach(function (book) {
+            // Create a container for each book
+            var bookContainer = document.createElement("div");
+            bookContainer.classList.add("book-container");
+
+            var bookItem = document.createElement("li");
+            bookItem.textContent = book.title;
+            // Need to add the field that we would like to display and don't forget to append them below
+            
+             // Append the li element to the book container
+            inventoryElement.appendChild(bookItem);
+            // Append the book container to the inventory element
+            inventoryElement.appendChild(bookContainer);
+        });
+    }
+}
+
 // Function on page load, pull the localStorage, and append it to the history
 document.addEventListener('DOMContentLoaded', function () {
     const historyList = document.getElementById('history-list');
@@ -93,8 +117,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         listItem.appendChild(link);
         historyList.appendChild(listItem);
-        
+
     });
+
+    // Call the function to display selected books from sessionStorage on page load
+    displaySelectedBooksFromLocalStorage();
 });
 
 searchButton.addEventListener('click', function () {
@@ -128,3 +155,4 @@ clearSelectionButton.addEventListener("click", function () {
     // Clear selected books from localStorage
     localStorage.removeItem('selectedBooks');
 });
+
