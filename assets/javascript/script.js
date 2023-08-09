@@ -31,9 +31,6 @@ function successCallback(position) {
         .then(weatherData => {
             // Save the weather data in session storage
             sessionStorage.setItem('weatherData', JSON.stringify(weatherData));
-
-            // Redirect to the results page
-            window.location.href = "results.html";
         })
         .catch(error => console.log('Error fetching weather data:', error));
 
