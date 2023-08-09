@@ -49,8 +49,6 @@ function successCallback(position) {
             redirect: 'follow'
         };
 
-        console.log(apiUrl);
-
         fetch(apiUrl, requestOptions)
             .then(response => response.json())
             .then(result => {
@@ -58,12 +56,6 @@ function successCallback(position) {
                 sessionStorage.setItem('searchResults', JSON.stringify(result));
                 // Redirect to the results page
                 window.location.href = "results.html?total_results=" + result.total_results + "&total_pages=" + result.total_pages;
-
-                console.log(result) // Debug
-                console.log('----------------------------')
-                console.log('total_results:', result.total_results);
-                console.log('total_pages:', result.total_pages);
-                console.log(typeof result.total_pages);
             })
 
             .catch(error => console.log('error', error));
