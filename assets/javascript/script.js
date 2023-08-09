@@ -82,12 +82,33 @@ function displaySelectedBooksFromLocalStorage() {
             var bookContainer = document.createElement("div");
             bookContainer.classList.add("book-container");
 
-            var bookItem = document.createElement("li");
-            bookItem.textContent = book.title;
+            // Creating the variables and elements that we would like to display in the "saved books" container
+            var bookTitle = document.createElement("li");
+            bookTitle.textContent = 'Title: ' + book.title;
+            bookContainer.appendChild(bookTitle);
+            var bookAuthors = document.createElement("li");
+            bookAuthors.textContent = 'Authors: ' + book.authors.join(", ");
+            bookContainer.appendChild(bookAuthors);
+            if (book.awards.length > 0) {
+                var bookAwards = document.createElement("li");
+                bookAwards.textContent = 'Awards: ' + book.awards.join(", ");
+                bookContainer.appendChild(bookAwards);
+            }
+            var bookLexile = document.createElement("li");
+            bookLexile.textContent = 'Lexile: ' + book.measurements.english.lexile;
+            bookContainer.appendChild(bookLexile);
+            if (book.subcategories.length > 0) {
+                var bookSubcategories = document.createElement("li");
+                bookSubcategories.textContent = 'Subcategories: ' + book.subcategories.join(", ");
+                bookContainer.appendChild(bookSubcategories);
+            }
+            var bookSummary = document.createElement("li");
+            bookSummary.textContent = 'Summary: ' + book.summary;
+            bookContainer.appendChild(bookSummary);
             // Need to add the field that we would like to display and don't forget to append them below
             
-             // Append the li element to the book container
-            inventoryElement.appendChild(bookItem);
+            // Append the li element to the book container
+
             // Append the book container to the inventory element
             inventoryElement.appendChild(bookContainer);
         });
