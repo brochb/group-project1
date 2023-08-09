@@ -97,7 +97,7 @@ function displayResults(results, page, resultsPerPage) {
         var title = book.title;
         var authors = book.authors.join(", ");
         var summary = book.summary;
-        // var coverImg = book.
+        var coverImg = book.published_works[0].cover_art_url;
         console.log(book)
         // You can add more properties like author_first_names, author_last_names, etc., if needed.
 
@@ -112,10 +112,14 @@ function displayResults(results, page, resultsPerPage) {
         authorsElement.textContent = "Authors: " + authors;
         var summaryElement = document.createElement("p");
         summaryElement.textContent = summary;
+        var bookImgElement = document.createElement("img");
+        bookImgElement.setAttribute("src", coverImg);
+        bookImgElement.setAttribute("class", "append-img")
 
 
         // Append title, summary and authors to the book container
         bookContainer.appendChild(titleElement);
+        bookContainer.appendChild(bookImgElement)
         bookContainer.appendChild(authorsElement);
         bookContainer.appendChild(summaryElement);
 
