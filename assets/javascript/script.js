@@ -14,6 +14,7 @@ function getUserLocationAndSearch() {
     }
 }
 
+
 // Success callback when the user's location is retrieved
 function successCallback(position) {
     var latitude = position.coords.latitude;
