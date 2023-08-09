@@ -25,15 +25,18 @@ h1 {
   color: var(--thirdcolor);
 }
 
-h2, h3 {
+h2 {
   text-decoration: underline;
+}
+
+h3{
+  text-decoration: underline;
+  text-align: center;
 }
 
 p {
     text-align: center;
     font-size: large;
-}
-
 }
 
 #search-boxes {
