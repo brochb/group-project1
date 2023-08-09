@@ -78,7 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
         link.href = '#';
-        link.textContent = query.join(' ');
+        console.log(query)
+        console.log(typeof query)
+        // link.textContent = query.join(' ');
 
         link.addEventListener('click', function () {
             const [value1, value2, value3, value4] = query;
