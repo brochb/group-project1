@@ -6,6 +6,8 @@ var sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString();
 var sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
 var description = weatherData.weather[0].description
 var city = weatherData.name
+var today = dayjs().unix()
+
 
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
@@ -28,21 +30,38 @@ descriptionElement.textContent = 'You are in ' + city + ' and it currently feels
 sunElement.textContent = 'Sunrise: ' + sunrise + ' / Sunset: ' + sunset;
 
 // Logic for displaying weather message
-if (description === 'clear sky' || description === 'broken clouds' || description === 'few clouds' || description === 'scattered clouds') {
-    if (tempFarenheit >= 60 && tempFarenheit <= 75) {
-        weatherMessageElement.textContent = 'In this splendid weather, no need for a nook, just find a sunny spot, and crack open a book. With skies so clear and the sun`s warm embrace, reading outside is a pure joy to chase!';
-    } else if (tempFarenheit > 75 && tempFarenheit <= 90) {
-        weatherMessageElement.textContent = 'Though the heat might swarm, do not dismay, grab a book and some shade, let time sway. With words that enthrall and a cool cover`s aid, the weather`s just a backdrop to the adventure portrayed!';
-    } else if (tempFarenheit > 90) {
-        weatherMessageElement.textContent = 'As the warmth wraps around, no need to screech, on a sandy beach or couch, a good book is in reach. With waves or cushions as your backdrop, just choose, adventure awaits in whichever setting you use!';
-    } else if (tempFarenheit < 65 && tempFarenheit >= 45) {
-        weatherMessageElement.textContent = 'By the firepit`s glow or under a blanket so neat, a book`s soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!';
+if (today >= weatherData.sys.sunrise && today < weatherData.sys.sunset) {
+    if (description === 'clear sky' || description === 'broken clouds' || description === 'few clouds' || description === 'scattered clouds') {
+        if (tempFarenheit >= 60 && tempFarenheit <= 75) {
+            weatherMessageElement.textContent = 'In this splendid weather, no need for a nook, just find a sunny spot, and crack open a book. With skies so clear and the sun`s warm embrace, reading outside is a pure joy to chase!';
+        } else if (tempFarenheit > 75 && tempFarenheit <= 90) {
+            weatherMessageElement.textContent = 'Though the heat might swarm, do not dismay, grab a book and some shade, let time sway. With words that enthrall and a cool cover`s aid, the weather`s just a backdrop to the adventure portrayed!';
+        } else if (tempFarenheit > 90) {
+            weatherMessageElement.textContent = 'As the warmth wraps around, no need to screech, on a sandy beach or couch, a good book is in reach. With waves or cushions as your backdrop, just choose, adventure awaits in whichever setting you use!';
+        } else if (tempFarenheit < 65 && tempFarenheit >= 45) {
+            weatherMessageElement.textContent = 'By the firepit`s glow or under a blanket so neat, a book`s soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!';
+        } else {
+            weatherMessageElement.textContent = 'Though it is chilly out there, no reason to freeze, beside the fire`s warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!';
+        }
     } else {
-        weatherMessageElement.textContent = 'Though it is chilly out there, no reason to freeze, beside the fire`s warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!';
+        weatherMessageElement.textContent = 'Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!';
     }
 } else {
-    weatherMessageElement.textContent = 'Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!';
+    if (description === 'clear sky' || description === 'broken clouds' || description === 'few clouds' || description === 'scattered clouds') {
+        if (tempFarenheit >= 65 && tempFarenheit <= 90) {
+            weatherMessageElement.textContent = 'Beneath the starry night`s delight, no need for nooks, just find that spot, and let a book unhook. With skies so clear, and stars` soft grace, reading outside is a joy in this cosmic embrace!';
+        } else if (tempFarenheit > 90) {
+            weatherMessageElement.textContent = 'With the summer`s heat so prime, when mosquitos buzz in line, let`s opt for indoors and retreat, where books and knowledge sweetly meet!';
+        } else if (tempFarenheit < 65 && tempFarenheit >= 50) {
+            weatherMessageElement.textContent = 'By the firepit`s glow or under a blanket so neat, a book`s soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!';
+        } else {
+            weatherMessageElement.textContent = 'Though it is chilly out there, no reason to freeze, beside the fire`s warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!';
+        }
+    } else {
+        weatherMessageElement.textContent = 'Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!';
 }
+}
+
 
 
 // Check if there are any results in the session storage
