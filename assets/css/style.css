@@ -16,7 +16,9 @@
   --fifthcolor: #593719;
 }
 
-
+body{
+  background-color: var(--thirdcolor);
+}
 /* Begin Permanent css */
 
 h1 {
@@ -25,19 +27,30 @@ h1 {
   color: var(--thirdcolor);
 }
 
-h2,
-h3 {
+h2 {
   text-decoration: underline;
 }
 
-p {
+h3{
+  text-decoration: underline;
   text-align: center;
-  font-size: large;
+}
+
+p {
+    text-align: center;
+    font-size: large;
 }
 
 #search-boxes {
   margin-bottom: 10px;
 }
+
+.append-img{
+  display: block;
+  margin: auto;
+  width: 10%;
+}
+
 
 
 input:hover {
