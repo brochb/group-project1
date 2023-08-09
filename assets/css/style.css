@@ -111,8 +111,6 @@ header div {
   color: var(--light);
 }
 
-
-
 .pagination {
   display: flex;
   flex-wrap: wrap;
