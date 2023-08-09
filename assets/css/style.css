@@ -71,8 +71,6 @@ p {
   width: 10%;
 }
 
-
-
 input:hover {
   background-color: gray;
 }
@@ -138,4 +136,10 @@ header div {
 .pagination-links a:hover {
   background-color: var(--firstcolor);
   color: var(--light);
+}
+
+#book-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

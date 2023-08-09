@@ -14,9 +14,12 @@ var urlParams = new URLSearchParams(window.location.search);
 var totalResults = urlParams.get('total_results');
 var totalPages = urlParams.get('total_pages');
 
-// Now you can use these values on your results page
-console.log('Total Results:', totalResults); // Debug
-console.log('Total Pages:', totalPages); // Debug
+// Update the HTML elements with the totalResults and totalPages values
+var totalResultsElement = document.getElementById("total-results");
+var totalPagesElement = document.getElementById("total-pages");
+
+totalResultsElement.textContent = totalResults;
+totalPagesElement.textContent = totalPages;
 
 var oldApiUrl = sessionStorage.getItem('apiUrl');
 
@@ -59,7 +62,7 @@ if (today >= weatherData.sys.sunrise && today < weatherData.sys.sunset) {
         }
     } else {
         weatherMessageElement.textContent = 'Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!';
-}
+    }
 }
 
 
@@ -136,11 +139,11 @@ function displayResults(results, page, resultsPerPage) {
         titleElement.textContent = title;
         var authorsElement = document.createElement("p");
         authorsElement.textContent = "Authors: " + authors;
-        authorsElement.setAttribute("style", "color: blue; text-decoration: " )
+        authorsElement.setAttribute("style", "color: blue; text-decoration: ")
         var summaryElement = document.createElement("p");
-        if(summary == ""){
+        if (summary == "") {
             summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
-        }else{  
+        } else {
             summaryElement.textContent = summary;
         }
         var bookImgElement = document.createElement("img");
