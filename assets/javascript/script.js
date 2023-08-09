@@ -31,9 +31,6 @@ function successCallback(position) {
         .then(weatherData => {
             // Save the weather data in session storage
             sessionStorage.setItem('weatherData', JSON.stringify(weatherData));
-
-            // Redirect to the results page
-            window.location.href = "results.html";
         })
         .catch(error => console.log('Error fetching weather data:', error));
 
@@ -47,7 +44,7 @@ function successCallback(position) {
 
         // Store the apiUrl in session storage
         sessionStorage.setItem('apiUrl', apiUrl);
-
+        
         var requestOptions = {
             method: 'GET',
             headers: myHeaders,
@@ -62,8 +59,15 @@ function successCallback(position) {
                 // Save the results in the session storage before redirecting
                 sessionStorage.setItem('searchResults', JSON.stringify(result));
                 // Redirect to the results page
-                window.location.href = "results.html";
+                window.location.href = "results.html?total_results=" + result.total_results + "&total_pages=" + result.total_pages;
+
+                console.log(result) // Debug
+                console.log('----------------------------')
+                console.log('total_results:', result.total_results);
+                console.log('total_pages:', result.total_pages);
+                console.log(typeof result.total_pages);
             })
+
             .catch(error => console.log('error', error));
     } else {
         // In case the input is empty
