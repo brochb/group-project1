@@ -7,6 +7,7 @@ var sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
 var description = weatherData.weather[0].description
 var city = weatherData.name
 var today = dayjs().unix()
+var selectedBooks;
 
 
 
@@ -155,23 +156,36 @@ function displayResults(results, page, resultsPerPage) {
         bookImgElement.setAttribute("src", coverImg);
         bookImgElement.setAttribute("class", "append-img");
 
-        // Create a checkbox for each book
+        // Create a checkbox for each book with a label
+        var checkboxLabel = document.createElement("label");
         var checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
         checkbox.setAttribute("class", "book-checkbox");
         checkbox.setAttribute("data-index", i); // Store the index of the book
 
+        
+        // Create a text node for the label
+        var labelText = document.createTextNode("Select this Book");
+        
+        // Append the checkbox and label text to the label element
+        checkboxLabel.appendChild(checkbox);
+        checkboxLabel.appendChild(labelText);
+        
         // Append title, summary, authors, and checkboxes to the book container
         bookContainer.appendChild(titleElement);
         bookContainer.appendChild(bookImgElement)
         bookContainer.appendChild(authorsElement);
         bookContainer.appendChild(summaryElement);
-        bookContainer.appendChild(checkbox);
-
+        bookContainer.appendChild(checkboxLabel);
+        
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
     }
 }
+
+selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
+// After updating the selectedBooks array in results.js
+localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
 
 // Add event listeners for checkboxes
 var checkboxes = document.querySelectorAll(".book-checkbox");
@@ -179,15 +193,15 @@ checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener("change", function () {
         var index = parseInt(this.getAttribute("data-index"));
         var selectedBook = searchResults.results[index];
-
+        
         if (this.checked) {
             // Add the selected book to localStorage
-            var selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
             selectedBooks.push(selectedBook);
             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
         } else {
             // Remove the selected book from localStorage
-            var selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
             selectedBooks = selectedBooks.filter(function (book) {
                 return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
             });
