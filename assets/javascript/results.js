@@ -7,13 +7,16 @@ var sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
 var description = weatherData.weather[0].description
 var city = weatherData.name
 var today = dayjs().unix()
+var date = dayjs().format('dddd, MMM DD YYYY hh:mm:ss A');
 var selectedBooks;
 
-
-
-// Get the query parameters from the URL
-var urlParams = new URLSearchParams(window.location.search);
-var totalResults = urlParams.get('total_results');
+// To update the time every second
+function updateTime() {
+    date = dayjs().format('dddd, MMM DD YYYY hh:mm:ss A');
+    
+    // Get the query parameters from the URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var totalResults = urlParams.get('total_results');
 var totalPages = urlParams.get('total_pages');
 
 // Format the numbers with commas as thousands separators
@@ -31,12 +34,12 @@ var oldApiUrl = sessionStorage.getItem('apiUrl');
 
 // Update the HTML elements with weather information
 var descriptionElement = document.getElementById("description");
-var sunElement = document.getElementById("sunrise-sunset");
+var timeElement = document.getElementById("currentTime");
 var weatherMessageElement = document.getElementById("weather-message")
 
 // Display weather information in the HTML elements
 descriptionElement.textContent = 'You are in ' + city + ' and it currently feels like: ' + tempFarenheit + '°F' + ' with ' + description; // We need to figure out what the options are. So far I only know "Scattered Clouds"
-sunElement.textContent = 'Sunrise: ' + sunrise + ' / Sunset: ' + sunset;
+timeElement.textContent = date;
 
 // Logic for displaying weather message
 if (today >= weatherData.sys.sunrise && today < weatherData.sys.sunset) {
@@ -100,34 +103,34 @@ searchButton.addEventListener("click", function () {
         var matchFirstName = !firstNameInput || (book.author_first_names && book.author_first_names.some(function (name) {
             return name.toLowerCase().includes(firstNameInput);
         }));
-
+        
         var matchLastName = !lastNameInput || (book.author_last_names && book.author_last_names.some(function (name) {
             return name.toLowerCase().includes(lastNameInput);
         }));
-
+        
         var matchSubcategory = !subcategoryInput || (book.subcategories && book.subcategories.some(function (subcat) {
             return subcat.toLowerCase().includes(subcategoryInput);
         }));
-
+        
         return matchFirstName && matchLastName && matchSubcategory;
     });
-
+    
     // Display the first set of results
     displayResults(searchResults, currentPage, resultsPerPage);
-
+    
     // Call fetchNextPage to fetch the next set of results
     fetchNextPage();
 });
 
 function displayResults(results, page, resultsPerPage) {
     page = page || 1;
-
+    
     var startIndex = (page - 1) * resultsPerPage;
     var endIndex = Math.min(startIndex + resultsPerPage, results.total_results);
-
+    
     var resultsContainer = document.getElementById("results-display");
     resultsContainer.innerHTML = ""; // Clear previous results
-
+    
     for (var i = startIndex; i < endIndex && i < results.results.length; i++) {
         var book = results.results[i];
         var title = book.title;
@@ -135,11 +138,11 @@ function displayResults(results, page, resultsPerPage) {
         var summary = book.summary;
         var coverImg = book.published_works[0].cover_art_url;
         // You can add more properties like author_first_names, author_last_names, etc., if needed.
-
+        
         // Create a container for each book
         var bookContainer = document.createElement("div");
         bookContainer.classList.add("book-item");
-
+        
         // Create and append elements for title, summary and authors
         var titleElement = document.createElement("h3");
         titleElement.textContent = title;
@@ -155,18 +158,18 @@ function displayResults(results, page, resultsPerPage) {
         var bookImgElement = document.createElement("img");
         bookImgElement.setAttribute("src", coverImg);
         bookImgElement.setAttribute("class", "append-img");
-
+        
         // Create a checkbox for each book with a label
         var checkboxLabel = document.createElement("label");
         var checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
         checkbox.setAttribute("class", "book-checkbox");
         checkbox.setAttribute("data-index", i); // Store the index of the book
-
+        
         
         // Create a text node for the label
         var labelText = document.createTextNode("Select this Book");
-        
+
         // Append the checkbox and label text to the label element
         checkboxLabel.appendChild(checkbox);
         checkboxLabel.appendChild(labelText);
@@ -213,25 +216,28 @@ checkboxes.forEach(function (checkbox) {
 var history = document.getElementById("history")
 var historyList = document.getElementById("history-list")
 
+}
+setInterval(updateTime, 1000);
+
 // // Trying a new approach for the updated API URL because I was having issues copying the original search
 // function updatePageNumberInApiUrl(oldApiUrl, newPageNumber) {
-//     // Split the oldApiUrl into parts using the '&' delimiter
-//     var urlParts = oldApiUrl.split('&');
-
-//     // Find and update the part containing the 'page' parameter
-//     for (var i = 0; i < urlParts.length; i++) {
-//         if (urlParts[i].startsWith('page=')) {
-//             urlParts[i] = 'page=' + newPageNumber;
-//             break; // Exit the loop after updating the parameter
-//         }
-//     }
-
-//     // Join the parts back together using the '&' delimiter
-//     var newApiUrl = urlParts.join('&');
-
-//     return newApiUrl;
-// }
-
+    //     // Split the oldApiUrl into parts using the '&' delimiter
+    //     var urlParts = oldApiUrl.split('&');
+    
+    //     // Find and update the part containing the 'page' parameter
+    //     for (var i = 0; i < urlParts.length; i++) {
+        //         if (urlParts[i].startsWith('page=')) {
+            //             urlParts[i] = 'page=' + newPageNumber;
+            //             break; // Exit the loop after updating the parameter
+            //         }
+            //     }
+            
+            //     // Join the parts back together using the '&' delimiter
+            //     var newApiUrl = urlParts.join('&');
+            
+            //     return newApiUrl;
+            // }
+            
 // // Update oldApiUrl to page 2 (I checked the AP URL in Postman and it works perfectly)
 // var newPageNumber = 2;
 // var updatedApiUrl = updatePageNumberInApiUrl(oldApiUrl, newPageNumber);

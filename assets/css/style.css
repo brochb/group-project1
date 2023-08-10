@@ -102,7 +102,8 @@ header {
   padding: 10px;
   margin-bottom: 10px;
   line-height: 1.5;
-  justify-content: center;
+  justify-content: space-between;
+  
 }
 
 header div {
