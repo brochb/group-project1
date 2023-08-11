@@ -174,3 +174,27 @@ header div {
   flex-wrap: wrap;
   text-align: start;
 }
+
+/* Tooltip styles */
+label[for="min-lexile"]:hover::before,
+label[for="max-lexile"]:hover::before {
+  content: attr(title);
+  position: absolute;
+  background-color: var(--firstcolor);
+  color: var(--light);
+  padding: 15px;
+  border-radius: 3px;
+  font-size: 18px;
+  z-index: 1;
+  top: 100px;
+  visibility: hidden;
+  opacity: 0;
+  left: 65%;
+}
+
+/* Show tooltip on hover */
+label[for="min-lexile"]:hover::before,
+label[for="max-lexile"]:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
