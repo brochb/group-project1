@@ -1,0 +1,39 @@
+Things to discuss during presentation
+
+index.html, AND results.html each coresponding to a different webpage.
+
+	a breakdown of the structure of the html on both pages including...
+
+		the initial search bar section, and the sectioned out history and inventory sections.
+		the results page book list, and how to research in the results page
+
+script.js, AND results.js each coresponding to their respective HTML pages
+
+	a breakdown of the structure of the javascript on btoh pages including...
+		(scipt.js)
+		API features, geolocation captures location, and uses it to find the current weather there, which uses that weather data to display a message
+
+		verification of input
+
+		displaying the history
+
+		the event listeners
+
+		(results.js)
+		variable definition, what each variable represents and why
+
+		time function
+
+		displaying weather message
+
+		page results display
+
+		filtering, and displaying results
+
+		setting up inventory, and logic associated with it
+
+style.css coresponds to all elements, and classes in both html pages
+	a breakdown of the structure of the css, and what each major styling component is doing and why
+
+	root, :hover, media screen listeners, 
+		
