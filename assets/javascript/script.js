@@ -165,11 +165,12 @@ document.addEventListener('DOMContentLoaded', function () {
         link.textContent = queryArray.join(' ');
 
         link.addEventListener('click', function () {
-            const [value1, value2, value3, value4] = queryArray;
+            const [value1, value2, value3, value4, value5] = queryArray;
             document.getElementById('query-input').value = value1;
             document.getElementById('queryCategory').value = value2;
-            document.getElementById('min-lexile').value = value3;
-            document.getElementById('max-lexile').value = value4;
+            document.getElementById('author').value = value3
+            document.getElementById('min-lexile').value = value4;
+            document.getElementById('max-lexile').value = value5;
         });
 
         listItem.appendChild(link);
@@ -187,22 +188,23 @@ searchButton.addEventListener('click', function () {
     // Create variables for the user inputs
     const dropdown1 = document.getElementById('query-input');
     const dropdown2 = document.getElementById('queryCategory');
-    const input1 = document.getElementById('min-lexile');
-    const input2 = document.getElementById('max-lexile');
+    const input1 = document.getElementById('author');
+    const input2 = document.getElementById('min-lexile');
+    const input3 = document.getElementById('max-lexile');
 
     // Set the value of each of the created variables to the user inputs
     const selectedValue1 = dropdown1.value;
     const selectedValue2 = dropdown2.value;
     const selectedValue3 = input1.value;
     const selectedValue4 = input2.value;
-
+    const selectedValue5 = input3.value;
 
     // Create an array with the combined values selected by the user
-    const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4];
+    const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4, selectedValue5];
 
     let queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
     queryHistory.push(combinedValues);
-    if (queryHistory.length > 5) queryHistory.shift();
+    if (queryHistory.length > 6) queryHistory.shift();
     localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
 });
 
