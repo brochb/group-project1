@@ -17,6 +17,8 @@ localStorage.setItem('Current Page', currentPage);
 var currentPageElement = document.getElementById('currentPage');
 var newApiUrl;
 var page;
+var resultsContainer = document.getElementById("results-display");
+    resultsContainer.innerHTML = ""; // Clear previous results
 
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
@@ -81,7 +83,6 @@ function displayResults(results, page, resultsPerPage) {
         checkbox.setAttribute("type", "checkbox");
         checkbox.setAttribute("class", "book-checkbox");
         checkbox.setAttribute("data-index", i); // Store the index of the book
-
 
         // Create a text node for the label
         var labelText = document.createTextNode("Select this Book");
@@ -339,6 +340,7 @@ nextPageButton.addEventListener('click', () => {
 
                 // Append the book container to the results container
                 resultsContainer.appendChild(bookContainer);
+
             }
 
             // Optionally, you might also want to update the pagination links or buttons here
@@ -411,5 +413,7 @@ prevPageButton.addEventListener('click', () => {
 })
 
 setInterval(updateTime, 1000);
+
+
 
 // I can’t get the counter to store the click because the element is inside the updateTime function which in part increases my counter every second if I put the eventListener inside the counter….
