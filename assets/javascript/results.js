@@ -15,28 +15,97 @@ var resultsPerPage;
 var currentPage = parseInt(localStorage.getItem('Current Page')) || 1;
 localStorage.setItem('Current Page', currentPage);
 var currentPageElement = document.getElementById('currentPage');
+var newApiUrl;
+var page;
+
+// Get the query parameters from the URL
+var urlParams = new URLSearchParams(window.location.search);
+var totalResults = urlParams.get('total_results');
+var totalPages = urlParams.get('total_pages');
+
+// Format the numbers with commas as thousands separators
+var formattedTotalResults = parseInt(totalResults).toLocaleString();
+var formattedTotalPages = parseInt(totalPages).toLocaleString();
+
+// Update the HTML elements with the totalResults and totalPages values
+var totalResultsElement = document.getElementById("total-results");
+var totalPagesElement = document.getElementById("total-pages");
+var currentPageElement = document.getElementById("current-page");
+
+totalResultsElement.textContent = formattedTotalResults;
+totalPagesElement.textContent = formattedTotalPages;
+currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages
+
+console.log(formattedTotalPages); // Debug
+
+function displayResults(results, page, resultsPerPage) {
+    page = page || 1;
+
+    var startIndex = (page - 1) * resultsPerPage;
+    var endIndex = Math.min(startIndex + resultsPerPage, results.total_results);
+
+    var resultsContainer = document.getElementById("results-display");
+    resultsContainer.innerHTML = ""; // Clear previous results
+
+    for (var i = startIndex; i < endIndex && i < results.results.length; i++) {
+        var book = results.results[i];
+        var title = book.title;
+        var authors = book.authors.join(", ");
+        var summary = book.summary;
+        var coverImg = book.published_works[0].cover_art_url;
+        // You can add more properties like author_first_names, author_last_names, etc., if needed.
+
+        // Create a container for each book
+        var bookContainer = document.createElement("div");
+        bookContainer.classList.add("book-item");
+
+        // Create and append elements for title, summary and authors
+        var titleElement = document.createElement("h3");
+        titleElement.textContent = title;
+        var authorsElement = document.createElement("p");
+        authorsElement.textContent = "Authors: " + authors;
+        authorsElement.setAttribute("style", "color: blue; text-decoration: ")
+        var summaryElement = document.createElement("p");
+        if (summary == "") {
+            summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
+        } else {
+            summaryElement.textContent = summary;
+        }
+        var bookImgElement = document.createElement("img");
+        bookImgElement.setAttribute("src", coverImg);
+        bookImgElement.setAttribute("class", "append-img");
+
+        // Create a checkbox for each book with a label
+        var checkboxLabel = document.createElement("label");
+        var checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("class", "book-checkbox");
+        checkbox.setAttribute("data-index", i); // Store the index of the book
+
+
+        // Create a text node for the label
+        var labelText = document.createTextNode("Select this Book");
+
+        // Append the checkbox and label text to the label element
+        checkboxLabel.appendChild(checkbox);
+        checkboxLabel.appendChild(labelText);
+
+        // Append title, summary, authors, and checkboxes to the book container
+        bookContainer.appendChild(titleElement);
+        bookContainer.appendChild(bookImgElement)
+        bookContainer.appendChild(authorsElement);
+        bookContainer.appendChild(summaryElement);
+        bookContainer.appendChild(checkboxLabel);
+
+        // Append the book container to the results container
+        resultsContainer.appendChild(bookContainer);
+    }
+}
 
 // To update the time every second
 function updateTime() {
     date = dayjs().format('dddd, MMM DD YYYY hh:mm:ss A');
 
-    // Get the query parameters from the URL
-    var urlParams = new URLSearchParams(window.location.search);
-    var totalResults = urlParams.get('total_results');
-    var totalPages = urlParams.get('total_pages');
-
-    // Format the numbers with commas as thousands separators
-    var formattedTotalResults = parseInt(totalResults).toLocaleString();
-    var formattedTotalPages = parseInt(totalPages).toLocaleString();
-
-    // Update the HTML elements with the totalResults and totalPages values
-    var totalResultsElement = document.getElementById("total-results");
-    var totalPagesElement = document.getElementById("total-pages");
-    var currentPageElement = document.getElementById("current-page");
-
-    totalResultsElement.textContent = formattedTotalResults;
-    totalPagesElement.textContent = formattedTotalPages;
-    currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages
 
     // Update the HTML elements with weather information
     var descriptionElement = document.getElementById("description");
@@ -125,101 +194,40 @@ function updateTime() {
         fetchNextPage();
     });
 
-    function displayResults(results, page, resultsPerPage) {
-        page = page || 1;
-
-        var startIndex = (page - 1) * resultsPerPage;
-        var endIndex = Math.min(startIndex + resultsPerPage, results.total_results);
-
-        var resultsContainer = document.getElementById("results-display");
-        resultsContainer.innerHTML = ""; // Clear previous results
-
-        for (var i = startIndex; i < endIndex && i < results.results.length; i++) {
-            var book = results.results[i];
-            var title = book.title;
-            var authors = book.authors.join(", ");
-            var summary = book.summary;
-            var coverImg = book.published_works[0].cover_art_url;
-            // You can add more properties like author_first_names, author_last_names, etc., if needed.
-
-            // Create a container for each book
-            var bookContainer = document.createElement("div");
-            bookContainer.classList.add("book-item");
-
-            // Create and append elements for title, summary and authors
-            var titleElement = document.createElement("h3");
-            titleElement.textContent = title;
-            var authorsElement = document.createElement("p");
-            authorsElement.textContent = "Authors: " + authors;
-            authorsElement.setAttribute("style", "color: blue; text-decoration: ")
-            var summaryElement = document.createElement("p");
-            if (summary == "") {
-                summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
-            } else {
-                summaryElement.textContent = summary;
-            }
-            var bookImgElement = document.createElement("img");
-            bookImgElement.setAttribute("src", coverImg);
-            bookImgElement.setAttribute("class", "append-img");
-
-            // Create a checkbox for each book with a label
-            var checkboxLabel = document.createElement("label");
-            var checkbox = document.createElement("input");
-            checkbox.setAttribute("type", "checkbox");
-            checkbox.setAttribute("class", "book-checkbox");
-            checkbox.setAttribute("data-index", i); // Store the index of the book
-
-
-            // Create a text node for the label
-            var labelText = document.createTextNode("Select this Book");
-
-            // Append the checkbox and label text to the label element
-            checkboxLabel.appendChild(checkbox);
-            checkboxLabel.appendChild(labelText);
-
-            // Append title, summary, authors, and checkboxes to the book container
-            bookContainer.appendChild(titleElement);
-            bookContainer.appendChild(bookImgElement)
-            bookContainer.appendChild(authorsElement);
-            bookContainer.appendChild(summaryElement);
-            bookContainer.appendChild(checkboxLabel);
-
-            // Append the book container to the results container
-            resultsContainer.appendChild(bookContainer);
-        }
-    }
-
-    selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
-    // After updating the selectedBooks array in results.js
-    localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-
-    // Add event listeners for checkboxes
-    var checkboxes = document.querySelectorAll(".book-checkbox");
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-            var index = parseInt(this.getAttribute("data-index"));
-            var selectedBook = searchResults.results[index];
-
-            if (this.checked) {
-                // Add the selected book to localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks.push(selectedBook);
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            } else {
-                // Remove the selected book from localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks = selectedBooks.filter(function (book) {
-                    return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-                });
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            }
-        });
-    });
-
-    var history = document.getElementById("history")
-    var historyList = document.getElementById("history-list")
 
 }
+
+selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
+// After updating the selectedBooks array in results.js
+localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+
+// Add event listeners for checkboxes
+var checkboxes = document.querySelectorAll(".book-checkbox");
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function () {
+        var index = parseInt(this.getAttribute("data-index"));
+        var selectedBook = searchResults.results[index];
+
+        if (this.checked) {
+            // Add the selected book to localStorage
+            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks.push(selectedBook);
+            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        } else {
+            // Remove the selected book from localStorage
+            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks = selectedBooks.filter(function (book) {
+                return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+            });
+            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        }
+    });
+});
+
+var history = document.getElementById("history")
+var historyList = document.getElementById("history-list")
+
+
 console.log(oldApiUrl)
 var nextPageButton = document.getElementById('next-page-button');
 var prevPageButton = document.getElementById('prev-page-button');
@@ -230,23 +238,29 @@ nextPageButton.addEventListener('click', () => {
     localStorage.setItem('Current Page', currentPage);
 
     // Extract the page number from the oldApiUrl and replace it with currentPage
-    function extractPageNumber(apiUrl) {
-        var pageParamIndex = apiUrl.indexOf('page='); // Find the index of "page="
+    function extractPageNumber(oldApiUrl) {
+        oldApiUrl = sessionStorage.getItem('apiUrl');
+        var pageParamIndex = oldApiUrl.indexOf('page='); // Find the index of "page="
         if (pageParamIndex !== -1) {
             var pageStartIndex = pageParamIndex + 5; // Move to the character after "page="
-            var pageEndIndex = apiUrl.indexOf('&', pageStartIndex); // Find the next '&' after the page number
+            var pageEndIndex = oldApiUrl.indexOf('&', pageStartIndex); // Find the next '&' after the page number
             if (pageEndIndex === -1) {
-                pageEndIndex = apiUrl.length; // If '&' not found, use the end of the string
+                pageEndIndex = oldApiUrl.length; // If '&' not found, use the end of the string
             }
-            var newApiUrl = apiUrl.substring(0, pageStartIndex) + newPage + apiUrl.substring(pageEndIndex);
+            var newApiUrl = oldApiUrl.substring(0, pageStartIndex) + currentPage + oldApiUrl.substring(pageEndIndex);
+
             return newApiUrl;
         }
-        return apiUrl; // Return the original apiUrl if "page=" parameter is not found
+        return oldApiUrl; // Return the original apiUrl if "page=" parameter is not found
+
     }
 
-    var newApiUrl = replacePageNumber(oldApiUrl, currentPage);
-    console.log("New API URL:", newApiUrl); // Should output the apiUrl with updated page number
+    extractPageNumber();
 
+    var newApiUrl = extractPageNumber(oldApiUrl); // Capture the newApiUrl value returned by the function
+    console.log("New API URL:", newApiUrl); // Now this will log the correct newApiUrl
+
+    currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages
 
     var myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "203d6f8221msh723786e2656b6a5p1512adjsn9cc9321e6473");
@@ -258,17 +272,76 @@ nextPageButton.addEventListener('click', () => {
         redirect: 'follow'
     };
 
-    fetch(updatedApiUrl, requestOptions)
+    fetch(newApiUrl, requestOptions)
         .then(response => response.json())
         .then(result => {
             // Update the searchResults with the new page results
             searchResults = result;
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
-            displayResults(searchResults, newPageNumber, resultsPerPage);
+            resultsContainer = document.getElementById("results-display");
+            resultsContainer.innerHTML = ""; // Clear previous results
 
-            // Update currentPage and display the new set of results
-            currentPage = newPageNumber;
+            page = page || 1;
+            var startIndex = (page - 1) * resultsPerPage;
+            var endIndex = Math.min(startIndex + resultsPerPage, searchResults.total_results);
+
+            for (var i = startIndex; i < endIndex && i < searchResults.results.length; i++) {
+                var book = searchResults.results[i];
+                var title = book.title;
+                var authors = book.authors.join(", ");
+                var summary = book.summary;
+                var coverImg = book.published_works[0].cover_art_url;
+
+                // You can add more properties like author_first_names, author_last_names, etc., if needed.
+
+                // Create a container for each book
+                var bookContainer = document.createElement("div");
+                bookContainer.classList.add("book-item");
+
+                // Create and append elements for title, summary and authors
+                var titleElement = document.createElement("h3");
+                titleElement.textContent = title;
+                var authorsElement = document.createElement("p");
+                authorsElement.textContent = "Authors: " + authors;
+                authorsElement.setAttribute("style", "color: blue; text-decoration: ")
+                var summaryElement = document.createElement("p");
+                if (summary == "") {
+                    summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
+                } else {
+                    summaryElement.textContent = summary;
+                }
+                var bookImgElement = document.createElement("img");
+                bookImgElement.setAttribute("src", coverImg);
+                bookImgElement.setAttribute("class", "append-img");
+
+                // Create a checkbox for each book with a label
+                var checkboxLabel = document.createElement("label");
+                var checkbox = document.createElement("input");
+                checkbox.setAttribute("type", "checkbox");
+                checkbox.setAttribute("class", "book-checkbox");
+                checkbox.setAttribute("data-index", i); // Store the index of the book
+
+
+                // Create a text node for the label
+                var labelText = document.createTextNode("Select this Book");
+
+                // Append the checkbox and label text to the label element
+                checkboxLabel.appendChild(checkbox);
+                checkboxLabel.appendChild(labelText);
+
+                // Append title, summary, authors, and checkboxes to the book container
+                bookContainer.appendChild(titleElement);
+                bookContainer.appendChild(bookImgElement)
+                bookContainer.appendChild(authorsElement);
+                bookContainer.appendChild(summaryElement);
+                bookContainer.appendChild(checkboxLabel);
+
+                // Append the book container to the results container
+                resultsContainer.appendChild(bookContainer);
+            }
+
+            // Optionally, you might also want to update the pagination links or buttons here
         })
         .catch(error => console.log('error', error));
 
@@ -280,22 +353,29 @@ prevPageButton.addEventListener('click', () => {
     localStorage.setItem('Current Page', currentPage);
 
     // Extract the page number from the oldApiUrl and replace it with currentPage
-    function extractPageNumber(apiUrl) {
-        var pageParamIndex = apiUrl.indexOf('page='); // Find the index of "page="
+    function extractPageNumber(oldApiUrl) {
+        oldApiUrl = sessionStorage.getItem('apiUrl');
+        var pageParamIndex = oldApiUrl.indexOf('page='); // Find the index of "page="
         if (pageParamIndex !== -1) {
             var pageStartIndex = pageParamIndex + 5; // Move to the character after "page="
-            var pageEndIndex = apiUrl.indexOf('&', pageStartIndex); // Find the next '&' after the page number
+            var pageEndIndex = oldApiUrl.indexOf('&', pageStartIndex); // Find the next '&' after the page number
             if (pageEndIndex === -1) {
-                pageEndIndex = apiUrl.length; // If '&' not found, use the end of the string
+                pageEndIndex = oldApiUrl.length; // If '&' not found, use the end of the string
             }
-            var newApiUrl = apiUrl.substring(0, pageStartIndex) + newPage + apiUrl.substring(pageEndIndex);
+            var newApiUrl = oldApiUrl.substring(0, pageStartIndex) + currentPage + oldApiUrl.substring(pageEndIndex);
+
             return newApiUrl;
         }
-        return apiUrl; // Return the original apiUrl if "page=" parameter is not found
+        return oldApiUrl; // Return the original apiUrl if "page=" parameter is not found
+
     }
 
-    var newApiUrl = replacePageNumber(oldApiUrl, currentPage);
-    console.log("New API URL:", newApiUrl); // Should output the apiUrl with updated page number
+    extractPageNumber();
+
+    var newApiUrl = extractPageNumber(oldApiUrl); // Capture the newApiUrl value returned by the function
+    console.log("New API URL:", newApiUrl); // Now this will log the correct newApiUrl
+
+    currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages
 
     var myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "203d6f8221msh723786e2656b6a5p1512adjsn9cc9321e6473");
@@ -307,17 +387,24 @@ prevPageButton.addEventListener('click', () => {
         redirect: 'follow'
     };
 
-    fetch(updatedApiUrl, requestOptions)
+    fetch(newApiUrl, requestOptions)
         .then(response => response.json())
         .then(result => {
             // Update the searchResults with the new page results
             searchResults = result;
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
-            displayResults(searchResults, newPageNumber, resultsPerPage);
+            // Call the displayResults function with the new results
+            displayResults(searchResults, currentPage, resultsPerPage);
 
-            // Update currentPage and display the new set of results
-            currentPage = newPageNumber;
+            // Update the DOM with the new current page
+            currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages;
+
+            console.log(searchResults); // Debug
+            console.log(currentPage); // Debug
+            console.log(resultsPerPage); // Debug
+
+            // Optionally, you might also want to update the pagination links or buttons here
         })
         .catch(error => console.log('error', error));
 
