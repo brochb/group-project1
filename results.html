@@ -20,15 +20,39 @@
 
     </header>
 
-    <section id="search-boxes">
-        <label for="first-name">Author's First Name:</label>
-        <input type="text" id="first-name" placeholder="༼ つ ◕_◕ ༽つ enter text here ">
+    <section name="fic-nonfic" id="search-container" autocomplete="off" required>
+        <label for="query-input">Genre:</label>
+        <select id="query-input">
+            <option value="fiction">Fiction</option>
+            <option value="nonfiction">Nonfiction</option>
+        </select>
 
-        <label for="last-name">Author's Last Name:</label>
-        <input type="text" id="last-name" placeholder="enter text here ☜(ﾟヮﾟ☜)">
+        <!-- Add the queryCategory input box -->
+        <label for="queryCategory">Query Category:</label>
+        <select id="queryCategory">
+            <option value="">Select Category</option> <!-- Blank option, won't affect the apiUrl -->
+            <option value="Fiction, Non-fiction & Poetry">Fiction, Non-fiction & Poetry</option>
+            <option value="Science Fiction & Fantasy">Science Fiction & Fantasy</option>
+            <option value="Real Life">Real Life</option>
+            <option value="Mystery & Suspense">Mystery & Suspense</option>
+            <option value="Hobbies, Sports & Outdoors">Hobbies, Sports & Outdoors</option>
+            <option value="Animals, Bugs & Pets">Animals, Bugs & Pets</option>
+            <option value="Science & Technology">Science & Technology</option>
+            <option value="Art, Creativity & Music">Art, Creativity & Music</option>
+            <option value="General Literature">General Literature</option>
+            <option value="Reference">Reference</option>
+        </select>
 
-        <label for="subcategory">Subcategory:</label>
-        <input type="text" id="subcategory" placeholder="ᓚᘏᗢ enter text here ᓚᘏᗢ">
+        <!-- Add the query input boxes for the author's first and last name (optional) -->
+        <label for="author">Author:</label>
+        <input type="text" id="author" placeholder="Author">
+
+        <!-- Add the query input boxes for the minimun and maximum Lexile (optional) -->
+        <label for="min-lexile" title="Lexile is the numeric representation of a text's readability or difficulty. A 6th grader should be reading at a level of around 1000. Maximum Lexile is 2000.">Min Lexile:</label>
+        <input type="text" id="min-lexile" placeholder="Min Lexile Here">
+
+        <label for="max-lexile" title="Lexile is the numeric representation of a text's readability or difficulty. A 6th grader should be reading at a level of around 1000. Maximum Lexile is 2000.">Max Lexile:</label>
+        <input type="text" id="max-lexile" placeholder="Max Lexile Here">
 
         <button id="search-button">Search</button>
     </section>

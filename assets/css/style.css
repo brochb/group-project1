@@ -7,6 +7,8 @@
   border: 1px solid #000000;
   padding: 10px;
   margin-bottom: 10px;
+  width: 40%;
+  min-width: 45%;
 }
 
 :root {
@@ -114,6 +116,7 @@ header div {
 #history {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 #history-list {
@@ -126,7 +129,8 @@ header div {
 }
 
 #saved-search {
-  width: 65%;
+  width: 35%;
+  text-align: center;
 }
 
 .pagination {
@@ -162,6 +166,15 @@ header div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+#results-display{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 48%;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .book-container {
