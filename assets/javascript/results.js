@@ -74,8 +74,6 @@ if (today >= weatherData.sys.sunrise && today < weatherData.sys.sunset) {
     }
 }
 
-
-
 // Check if there are any results in the session storage
 if (!searchResults || !searchResults.results || searchResults.results.length === 0) {
     console.log("No search results found. Redirecting to the index page.");
