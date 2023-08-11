@@ -38,10 +38,44 @@ function successCallback(position) {
     var queryCategory = document.getElementById("queryCategory").value;
     var minLexile = document.getElementById("min-lexile").value;
     var maxLexile = document.getElementById("max-lexile").value;
+    var author = document.getElementById("author").value;
+
+    //  WE NEED TO COME UP WITH SOME "IF" TO MAKE SURE '=&lexile_min=', '&lexile_max=' AND '&author=' DON'T GET INCLUDED IN THE apiUrl
 
     if (queryInput.trim() !== "") {
-        // Modify the apiUrl to include the selected queryCategory
-        apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&' + queryCategory + '=&lexile_min=' + minLexile + '&lexile_max=' + maxLexile + '&page=1&results_per_page=100';
+        // Construct the base apiUrl
+        apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput;
+    
+        // Build an array to hold the search parameters and their values
+        const searchParams = [];
+    
+        // Add queryCategory if provided
+        if (queryCategory.trim() !== "") {
+            searchParams.push(queryCategory);
+        }
+    
+        // Add lexile_min if provided
+        if (minLexile.trim() !== "") {
+            searchParams.push('lexile_min=' + minLexile);
+        }
+    
+        // Add lexile_max if provided
+        if (maxLexile.trim() !== "") {
+            searchParams.push('lexile_max=' + maxLexile);
+        }
+    
+        // Add author if provided
+        if (author.trim() !== "") {
+            searchParams.push('author=' + author);
+        }
+    
+        // Combine the search parameters into the apiUrl
+        if (searchParams.length > 0) {
+            apiUrl += '&' + searchParams.join('&');
+        }
+    
+        // Add the remaining parameters and redirect logic
+        apiUrl += '&page=1&results_per_page=100';
 
         // Store the apiUrl in session storage
         sessionStorage.setItem('apiUrl', apiUrl);
