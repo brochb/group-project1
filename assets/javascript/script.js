@@ -14,6 +14,7 @@ function getUserLocationAndSearch() {
     }
 }
 
+
 // Success callback when the user's location is retrieved
 function successCallback(position) {
     var latitude = position.coords.latitude;
@@ -35,10 +36,46 @@ function successCallback(position) {
     // Make API call to Book Finder API
     var queryInput = document.getElementById("query-input").value;
     var queryCategory = document.getElementById("queryCategory").value;
+    var minLexile = document.getElementById("min-lexile").value;
+    var maxLexile = document.getElementById("max-lexile").value;
+    var author = document.getElementById("author").value;
+
+    //  WE NEED TO COME UP WITH SOME "IF" TO MAKE SURE '=&lexile_min=', '&lexile_max=' AND '&author=' DON'T GET INCLUDED IN THE apiUrl
 
     if (queryInput.trim() !== "") {
-        // Modify the apiUrl to include the selected queryCategory
-        apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput + '&' + queryCategory + '&page=1&results_per_page=100';
+        // Construct the base apiUrl
+        apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput;
+    
+        // Build an array to hold the search parameters and their values
+        const searchParams = [];
+    
+        // Add queryCategory if provided
+        if (queryCategory.trim() !== "") {
+            searchParams.push(queryCategory);
+        }
+    
+        // Add lexile_min if provided
+        if (minLexile.trim() !== "") {
+            searchParams.push('lexile_min=' + minLexile);
+        }
+    
+        // Add lexile_max if provided
+        if (maxLexile.trim() !== "") {
+            searchParams.push('lexile_max=' + maxLexile);
+        }
+    
+        // Add author if provided
+        if (author.trim() !== "") {
+            searchParams.push('author=' + author);
+        }
+    
+        // Combine the search parameters into the apiUrl
+        if (searchParams.length > 0) {
+            apiUrl += '&' + searchParams.join('&');
+        }
+    
+        // Add the remaining parameters and redirect logic
+        apiUrl += '&page=1&results_per_page=100';
 
         // Store the apiUrl in session storage
         sessionStorage.setItem('apiUrl', apiUrl);
@@ -69,6 +106,51 @@ function errorCallback(error) {
     console.log('Error getting user location:', error.message);
 }
 
+function displaySelectedBooksFromLocalStorage() {
+    var inventoryElement = document.getElementById("inventory");
+    inventoryElement.innerHTML = ""; // Clear previous inventory
+
+    var selectedBooksFromLocal = JSON.parse(localStorage.getItem('selectedBooks'));
+
+    if (selectedBooksFromLocal && selectedBooksFromLocal.length > 0) {
+        selectedBooksFromLocal.forEach(function (book) {
+            // Create a container for each book
+            var bookContainer = document.createElement("div");
+            bookContainer.classList.add("book-container");
+
+            // Creating the variables and elements that we would like to display in the "saved books" container
+            var bookTitle = document.createElement("li");
+            bookTitle.textContent = 'Title: ' + book.title;
+            bookContainer.appendChild(bookTitle);
+            var bookAuthors = document.createElement("li");
+            bookAuthors.textContent = 'Authors: ' + book.authors.join(", ");
+            bookContainer.appendChild(bookAuthors);
+            if (book.awards.length > 0) {
+                var bookAwards = document.createElement("li");
+                bookAwards.textContent = 'Awards: ' + book.awards.join(", ");
+                bookContainer.appendChild(bookAwards);
+            }
+            var bookLexile = document.createElement("li");
+            bookLexile.textContent = 'Lexile: ' + book.measurements.english.lexile;
+            bookContainer.appendChild(bookLexile);
+            if (book.subcategories.length > 0) {
+                var bookSubcategories = document.createElement("li");
+                bookSubcategories.textContent = 'Subcategories: ' + book.subcategories.join(", ");
+                bookContainer.appendChild(bookSubcategories);
+            }
+            var bookSummary = document.createElement("li");
+            bookSummary.textContent = 'Summary: ' + book.summary;
+            bookContainer.appendChild(bookSummary);
+            // Need to add the field that we would like to display and don't forget to append them below
+            
+            // Append the li element to the book container
+
+            // Append the book container to the inventory element
+            inventoryElement.appendChild(bookContainer);
+        });
+    }
+}
+
 // Function on page load, pull the localStorage, and append it to the history
 document.addEventListener('DOMContentLoaded', function () {
     const historyList = document.getElementById('history-list');
@@ -77,43 +159,59 @@ document.addEventListener('DOMContentLoaded', function () {
     queryHistory.forEach(query => {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
-        link.href = query.join('');
+        link.href = '#';
+        // Convert query object properties to an array
+        const queryArray = Object.values(query);
+        link.textContent = queryArray.join(' ');
 
         link.addEventListener('click', function () {
-            const [value1, value2, value3, value4] = query;
+            const [value1, value2, value3, value4, value5] = queryArray;
             document.getElementById('query-input').value = value1;
             document.getElementById('queryCategory').value = value2;
-            document.getElementById('author-first-name').value = value3;
-            document.getElementById('author-last-name').value = value4;
+            document.getElementById('author').value = value3
+            document.getElementById('min-lexile').value = value4;
+            document.getElementById('max-lexile').value = value5;
         });
 
         listItem.appendChild(link);
         historyList.appendChild(listItem);
+
     });
+
+    // Call the function to display selected books from sessionStorage on page load
+    displaySelectedBooksFromLocalStorage();
 });
 
-    searchButton.addEventListener('click', function () {
-        // Get the user's location before making the search
-        getUserLocationAndSearch();
-        // Create variables for the user inputs
-        const dropdown1 = document.getElementById('query-input');
-        const dropdown2 = document.getElementById('queryCategory');
-        const input1 = document.getElementById('author-first-name');
-        const input2 = document.getElementById('author-last-name');
+searchButton.addEventListener('click', function () {
+    // Get the user's location before making the search
+    getUserLocationAndSearch();
+    // Create variables for the user inputs
+    const dropdown1 = document.getElementById('query-input');
+    const dropdown2 = document.getElementById('queryCategory');
+    const input1 = document.getElementById('author');
+    const input2 = document.getElementById('min-lexile');
+    const input3 = document.getElementById('max-lexile');
 
-        // Set the value of each of the created variables to the user inputs
-        const selectedValue1 = dropdown1.value;
-        const selectedValue2 = dropdown2.value;
-        const selectedValue3 = input1.value;
-        const selectedValue4 = input2.value;
+    // Set the value of each of the created variables to the user inputs
+    const selectedValue1 = dropdown1.value;
+    const selectedValue2 = dropdown2.value;
+    const selectedValue3 = input1.value;
+    const selectedValue4 = input2.value;
+    const selectedValue5 = input3.value;
 
+    // Create an array with the combined values selected by the user
+    const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4, selectedValue5];
 
-        // Create an array with the combined values selected by the user
-        const combinedValues = [selectedValue1, selectedValue2, selectedValue3, selectedValue4];
-    
-        let queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
-        queryHistory.push(combinedValues);
-        if (queryHistory.length > 5) queryHistory.shift();
-        localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
-    });
+    let queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
+    queryHistory.push(combinedValues);
+    if (queryHistory.length > 6) queryHistory.shift();
+    localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
+});
+
+// Add event listener for the "Clear Selection" button
+var clearSelectionButton = document.getElementById("clear-selection-button");
+clearSelectionButton.addEventListener("click", function () {
+    // Clear selected books from localStorage
+    localStorage.removeItem('selectedBooks');
+});
 

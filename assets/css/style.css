@@ -2,6 +2,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 .book-item {
   border: 1px solid #000000;
   padding: 10px;
@@ -71,8 +72,6 @@ p {
   width: 10%;
 }
 
-
-
 input:hover {
   background-color: gray;
 }
@@ -103,12 +102,31 @@ header {
   padding: 10px;
   margin-bottom: 10px;
   line-height: 1.5;
-  justify-content: center;
+  justify-content: space-between;
+  
 }
 
 header div {
   margin: 0px 30px 10px 0px;
   color: var(--light);
+}
+
+#history {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#history-list {
+  display: block;
+  text-align: left;
+}
+
+#history-search {
+  width: 35%;
+}
+
+#saved-search {
+  width: 65%;
 }
 
 .pagination {
@@ -138,4 +156,21 @@ header div {
 .pagination-links a:hover {
   background-color: var(--firstcolor);
   color: var(--light);
+}
+
+#book-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.book-container {
+  padding: 10px 3px 10px 3px;
+  border: #000000 solid 1px;
+}
+
+.book-container li {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: start;
 }

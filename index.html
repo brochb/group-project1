@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
     <title>The Book Search Extraordinaire!</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 
 <body>
     <h1>The Book Search Extraordinaire!</h1>
@@ -36,28 +38,39 @@
         </select>
 
         <!-- Add the query input boxes for the author's first and last name (optional) -->
-        <label for="author-first-name">Author's First Name:</label>
-        <input type="text" id="author-first-name" placeholder="author's first name here">
+        <label for="author">Auhtor:</label>
+        <input type="text" id="author" placeholder="Author">
 
-        <label for="author-last-name">Author's Last Name:</label>
-        <input type="text" id="author-last-name" placeholder="authors last name here">
+        <!-- Add the query input boxes for the minimun and maximum Lexile (optional) -->
+        <label for="min-lexile">Min Lexile:</label>
+        <input type="text" id="min-lexile" placeholder="Min Lexile Here">
+
+        <label for="max-lexile">Max Lexile:</label>
+        <input type="text" id="max-lexile" placeholder="Max Lexile Here">
 
         <button id="search-button">Search</button>
     </section>
 
     <section id="history">
-        <h2>History:</h2>
-        <ul id="history-list"></ul>
-        
+        <div id="history-search">
+            <h2>History:</h2>
+            <ul id="history-list"></ul>
+        </div>
+
+        <div id="saved-search">
+            <h2>Saved Books From Search:</h2>
+            <button id="clear-selection-button">Clear Selected Books</button>
+            <ul id="inventory"></ul>
+        </div>
 
     </section>
     <footer class="footer">
         <h2></h2>
         <ul>
             <li>
-                Contact 
+                Contact
             </li>
-            <li class= "github" style=" text-decoration: underline;">
+            <li class="github" style=" text-decoration: underline;">
                 <a href="https://github.com/brochb/group-project1">Github</a>
             </li>
         </ul>
@@ -68,4 +81,5 @@
 
     <script src="./assets/javascript/script.js"></script>
 </body>
+
 </html>
