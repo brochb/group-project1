@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     queryHistory.forEach(query => {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
-        link.href = '#';
+        link.href = query.join('');
 
         link.addEventListener('click', function () {
             const [value1, value2, value3, value4] = query;
