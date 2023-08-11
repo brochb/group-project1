@@ -40,8 +40,7 @@ function successCallback(position) {
     var maxLexile = document.getElementById("max-lexile").value;
     var author = document.getElementById("author").value;
 
-    //  WE NEED TO COME UP WITH SOME "IF" TO MAKE SURE '=&lexile_min=', '&lexile_max=' AND '&author=' DON'T GET INCLUDED IN THE apiUrl
-
+    // Verification of input
     if (queryInput.trim() !== "") {
         // Construct the base apiUrl
         apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput;
