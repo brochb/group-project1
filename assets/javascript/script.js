@@ -206,6 +206,9 @@ searchButton.addEventListener('click', function () {
     queryHistory.push(combinedValues);
     if (queryHistory.length > 6) queryHistory.shift();
     localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
+    
+    // Add the following line to reset the locally stored current page
+    localStorage.removeItem('Current Page');
 });
 
 // Add event listener for the "Clear Selection" button

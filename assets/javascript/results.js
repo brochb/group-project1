@@ -46,6 +46,8 @@ function displayResults(results, page, resultsPerPage) {
     var startIndex = (page - 1) * resultsPerPage;
     var endIndex = Math.min(startIndex + resultsPerPage, results.total_results);
 
+    console.log(resultsPerPage);
+    
     var resultsContainer = document.getElementById("results-display");
     resultsContainer.innerHTML = ""; // Clear previous results
 
@@ -160,8 +162,8 @@ function updateTime() {
     resultsPerPage = 100;
     filteredResults = searchResults.results; // Initialize filteredResults with all results
 
-    // Display the first set of results
-    displayResults(searchResults, currentPage, resultsPerPage);
+    // // Display the first set of results
+    // displayResults(searchResults, currentPage, resultsPerPage);
 
     // Add event listener for the "Search" button
     var searchButton = document.getElementById("search-button");
@@ -188,15 +190,21 @@ function updateTime() {
             return matchFirstName && matchLastName && matchSubcategory;
         });
 
-        // Display the first set of results
-        displayResults(searchResults, currentPage, resultsPerPage);
-
+        
         // Call fetchNextPage to fetch the next set of results
         fetchNextPage();
     });
-
-
+    
+    
 }
+resultsPerPage = 100;
+// Display the first set of results
+displayResults(searchResults, currentPage, resultsPerPage);
+
+console.log(searchResults);
+console.log(currentPage);
+console.log(resultsPerPage)
+
 
 selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
 // After updating the selectedBooks array in results.js
@@ -396,15 +404,68 @@ prevPageButton.addEventListener('click', () => {
             searchResults = result;
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
-            // Call the displayResults function with the new results
-            displayResults(searchResults, currentPage, resultsPerPage);
+            resultsContainer = document.getElementById("results-display");
+            resultsContainer.innerHTML = ""; // Clear previous results
 
-            // Update the DOM with the new current page
-            currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages;
+            page = page || 1;
+            var startIndex = (page - 1) * resultsPerPage;
+            var endIndex = Math.min(startIndex + resultsPerPage, searchResults.total_results);
 
-            console.log(searchResults); // Debug
-            console.log(currentPage); // Debug
-            console.log(resultsPerPage); // Debug
+            for (var i = startIndex; i < endIndex && i < searchResults.results.length; i++) {
+                var book = searchResults.results[i];
+                var title = book.title;
+                var authors = book.authors.join(", ");
+                var summary = book.summary;
+                var coverImg = book.published_works[0].cover_art_url;
+
+                // You can add more properties like author_first_names, author_last_names, etc., if needed.
+
+                // Create a container for each book
+                var bookContainer = document.createElement("div");
+                bookContainer.classList.add("book-item");
+
+                // Create and append elements for title, summary and authors
+                var titleElement = document.createElement("h3");
+                titleElement.textContent = title;
+                var authorsElement = document.createElement("p");
+                authorsElement.textContent = "Authors: " + authors;
+                authorsElement.setAttribute("style", "color: blue; text-decoration: ")
+                var summaryElement = document.createElement("p");
+                if (summary == "") {
+                    summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
+                } else {
+                    summaryElement.textContent = summary;
+                }
+                var bookImgElement = document.createElement("img");
+                bookImgElement.setAttribute("src", coverImg);
+                bookImgElement.setAttribute("class", "append-img");
+
+                // Create a checkbox for each book with a label
+                var checkboxLabel = document.createElement("label");
+                var checkbox = document.createElement("input");
+                checkbox.setAttribute("type", "checkbox");
+                checkbox.setAttribute("class", "book-checkbox");
+                checkbox.setAttribute("data-index", i); // Store the index of the book
+
+
+                // Create a text node for the label
+                var labelText = document.createTextNode("Select this Book");
+
+                // Append the checkbox and label text to the label element
+                checkboxLabel.appendChild(checkbox);
+                checkboxLabel.appendChild(labelText);
+
+                // Append title, summary, authors, and checkboxes to the book container
+                bookContainer.appendChild(titleElement);
+                bookContainer.appendChild(bookImgElement)
+                bookContainer.appendChild(authorsElement);
+                bookContainer.appendChild(summaryElement);
+                bookContainer.appendChild(checkboxLabel);
+
+                // Append the book container to the results container
+                resultsContainer.appendChild(bookContainer);
+
+            }
 
             // Optionally, you might also want to update the pagination links or buttons here
         })
@@ -412,8 +473,5 @@ prevPageButton.addEventListener('click', () => {
 
 })
 
+
 setInterval(updateTime, 1000);
-
-
-
-// I can’t get the counter to store the click because the element is inside the updateTime function which in part increases my counter every second if I put the eventListener inside the counter….
