@@ -53,6 +53,11 @@ h2 {
   text-align: center;
 }
 
+#query-input, #queryCategory, #author, #min-lexile, #max-lexile {
+  padding: 5px 0px 5px 0px;
+  margin: 10px 0px 10px 0px;
+}
+
 h3{
   text-decoration: underline;
   text-align: center;

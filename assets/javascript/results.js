@@ -18,7 +18,7 @@ var currentPageElement = document.getElementById('currentPage');
 var newApiUrl;
 var page;
 var resultsContainer = document.getElementById("results-display");
-    resultsContainer.innerHTML = ""; // Clear previous results
+resultsContainer.innerHTML = ""; // Clear previous results
 
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
@@ -47,7 +47,7 @@ function displayResults(results, page, resultsPerPage) {
     var endIndex = Math.min(startIndex + resultsPerPage, results.total_results);
 
     console.log(resultsPerPage);
-    
+
     var resultsContainer = document.getElementById("results-display");
     resultsContainer.innerHTML = ""; // Clear previous results
 
@@ -190,12 +190,12 @@ function updateTime() {
             return matchFirstName && matchLastName && matchSubcategory;
         });
 
-        
+
         // Call fetchNextPage to fetch the next set of results
         fetchNextPage();
     });
-    
-    
+
+
 }
 resultsPerPage = 100;
 // Display the first set of results
@@ -357,6 +357,9 @@ nextPageButtonTop.addEventListener('click', () => {
         })
         .catch(error => console.log('error', error));
 
+    // Update the next page button state based on the new currentPage
+    updateNextButtonState();
+
 })
 
 prevPageButtonTop.addEventListener('click', () => {
@@ -472,6 +475,8 @@ prevPageButtonTop.addEventListener('click', () => {
             // Optionally, you might also want to update the pagination links or buttons here
         })
         .catch(error => console.log('error', error));
+    // Update the previous page button state based on the new currentPage
+    updatePreviousButtonState();
 
 })
 
@@ -590,6 +595,9 @@ nextPageButton.addEventListener('click', () => {
         })
         .catch(error => console.log('error', error));
 
+    // Update the next page button state based on the new currentPage
+    updateNextButtonState();
+
 })
 
 prevPageButton.addEventListener('click', () => {
@@ -702,12 +710,39 @@ prevPageButton.addEventListener('click', () => {
                 resultsContainer.appendChild(bookContainer);
 
             }
-
-            // Optionally, you might also want to update the pagination links or buttons here
         })
         .catch(error => console.log('error', error));
 
+    // Update the previous page button state based on the new currentPage
+    updatePreviousButtonState();
+
 })
+
+// Function to update the state of the previous page button
+function updatePreviousButtonState() {
+    if (currentPage === 1) {
+        prevPageButton.disabled = true;
+        prevPageButtonTop.disabled = true;
+    } else {
+        prevPageButton.disabled = false;
+        prevPageButtonTop.disabled = false;
+    }
+}
+
+// Function to update the state of the next page button
+function updateNextButtonState() {
+    if (currentPage === parseFloat(formattedTotalPages)) {
+        nextPageButton.disabled = true;
+        nextPageButtonTop.disabled = true;
+    } else {
+        nextPageButton.disabled = false;
+        nextPageButtonTop.disabled = false;
+    }
+}
+
+// Call the function initially to set the button state
+updatePreviousButtonState();
+updateNextButtonState();
 
 
 setInterval(updateTime, 1000);
