@@ -19,6 +19,7 @@ var newApiUrl;
 var page;
 var resultsContainer = document.getElementById("results-display");
 resultsContainer.innerHTML = ""; // Clear previous results
+var book;
 
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
@@ -52,11 +53,12 @@ function displayResults(results, page, resultsPerPage) {
     resultsContainer.innerHTML = ""; // Clear previous results
 
     for (var i = startIndex; i < endIndex && i < results.results.length; i++) {
-        var book = results.results[i];
+        book = results.results[i];
         var title = book.title;
         var authors = book.authors.join(", ");
         var summary = book.summary;
         var coverImg = book.published_works[0].cover_art_url;
+        var lexile = book.measurements.english.lexile;
         // You can add more properties like author_first_names, author_last_names, etc., if needed.
 
         // Create a container for each book
@@ -109,7 +111,6 @@ function displayResults(results, page, resultsPerPage) {
 function updateTime() {
     date = dayjs().format('dddd, MMM DD YYYY hh:mm:ss A');
 
-
     // Update the HTML elements with weather information
     var descriptionElement = document.getElementById("description");
     var timeElement = document.getElementById("currentTime");
@@ -123,88 +124,62 @@ function updateTime() {
     if (today >= weatherData.sys.sunrise && today < weatherData.sys.sunset) {
         if (description === 'clear sky' || description === 'broken clouds' || description === 'few clouds' || description === 'scattered clouds') {
             if (tempFarenheit >= 60 && tempFarenheit <= 75) {
-                weatherMessageElement.textContent = 'In this splendid weather, no need for a nook, just find a sunny spot, and crack open a book. With skies so clear and the sun`s warm embrace, reading outside is a pure joy to chase!';
+                weatherMessageElement.textContent = "In this splendid weather, no need for a nook, just find a sunny spot, and crack open a book. With skies so clear and the sun's warm embrace, reading outside is a pure joy to chase!";
             } else if (tempFarenheit > 75 && tempFarenheit <= 90) {
-                weatherMessageElement.textContent = 'Though the heat might swarm, do not dismay, grab a book and some shade, let time sway. With words that enthrall and a cool cover`s aid, the weather`s just a backdrop to the adventure portrayed!';
+                weatherMessageElement.textContent = "Though the heat might swarm, do not dismay, grab a book and some shade, let time sway. With words that enthrall and a cool cover's aid, the weather's just a backdrop to the adventure portrayed!";
             } else if (tempFarenheit > 90) {
-                weatherMessageElement.textContent = 'As the warmth wraps around, no need to screech, on a sandy beach or couch, a good book is in reach. With waves or cushions as your backdrop, just choose, adventure awaits in whichever setting you use!';
+                weatherMessageElement.textContent = "As the warmth wraps around, no need to screech, on a sandy beach or couch, a good book is in reach. With waves or cushions as your backdrop, just choose, adventure awaits in whichever setting you use!";
             } else if (tempFarenheit < 60 && tempFarenheit >= 45) {
-                weatherMessageElement.textContent = 'By the firepit`s glow or under a blanket so neat, a book`s soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!';
+                weatherMessageElement.textContent = "By the firepit's glow or under a blanket so neat, a book's soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!";
             } else {
-                weatherMessageElement.textContent = 'Though it is chilly out there, no reason to freeze, beside the fire`s warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!';
+                weatherMessageElement.textContent = "Though it is chilly out there, no reason to freeze, beside the fire's warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!";
             }
         } else {
-            weatherMessageElement.textContent = 'Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!';
+            weatherMessageElement.textContent = "Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!";
         }
     } else {
         if (description === 'clear sky' || description === 'broken clouds' || description === 'few clouds' || description === 'scattered clouds') {
             if (tempFarenheit >= 65 && tempFarenheit <= 90) {
-                weatherMessageElement.textContent = 'Beneath the starry night`s delight, no need for nooks, just find that spot, and let a book unhook. With skies so clear, and stars` soft grace, reading outside is a joy in this cosmic embrace!';
+                weatherMessageElement.textContent = "Beneath the starry night's delight, no need for nooks, just find that spot, and let a book unhook. With skies so clear, and stars' soft grace, reading outside is a joy in this cosmic embrace!";
             } else if (tempFarenheit > 90) {
-                weatherMessageElement.textContent = 'With the summer`s heat so prime, when mosquitos buzz in line, let`s opt for indoors and retreat, where books and knowledge sweetly meet!';
+                weatherMessageElement.textContent = "With the summer's heat so prime, when mosquitos buzz in line, let's opt for indoors and retreat, where books and knowledge sweetly meet!";
             } else if (tempFarenheit < 65 && tempFarenheit >= 50) {
-                weatherMessageElement.textContent = 'By the firepit`s glow or under a blanket so neat, a book`s soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!';
+                weatherMessageElement.textContent = "By the firepit's glow or under a blanket so neat, a book's soothing embrace is truly a treat. As the flames dance or the fabric hugs tight, the world of words whisks you away into the night!";
             } else {
-                weatherMessageElement.textContent = 'Though it is chilly out there, no reason to freeze, beside the fire`s warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!';
+                weatherMessageElement.textContent = "Though it is chilly out there, no reason to freeze, beside the fire's warmth, you will be at ease. With words on a page, a journey takes flight, to distant realms and adventures so bright. So embrace the cozy, forget the cold air, a good book will carry you anywhere!";
             }
         } else {
-            weatherMessageElement.textContent = 'Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!';
+            weatherMessageElement.textContent = "Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!";
         }
     }
-
-    // Check if there are any results in the session storage
-    if (!searchResults || !searchResults.results || searchResults.results.length === 0) {
-        console.log("No search results found. Redirecting to the index page.");
-        window.location.href = "index.html"; // If no results found, redirect back to the search page
-    }
-
-    // Set the initial page number and results per page
-    resultsPerPage = 100;
-    filteredResults = searchResults.results; // Initialize filteredResults with all results
-
-    // // Display the first set of results
-    // displayResults(searchResults, currentPage, resultsPerPage);
-
-    // Add event listener for the "Search" button
-    var searchButton = document.getElementById("search-button");
-    searchButton.addEventListener("click", function () {
-        // Get the search input values
-        var firstNameInput = document.getElementById("first-name").value.trim().toLowerCase();
-        var lastNameInput = document.getElementById("last-name").value.trim().toLowerCase();
-        var subcategoryInput = document.getElementById("subcategory").value.trim().toLowerCase();
-
-        // Filter the results based on the search inputs
-        filteredResults = searchResults.results.filter(function (book) {
-            var matchFirstName = !firstNameInput || (book.author_first_names && book.author_first_names.some(function (name) {
-                return name.toLowerCase().includes(firstNameInput);
-            }));
-
-            var matchLastName = !lastNameInput || (book.author_last_names && book.author_last_names.some(function (name) {
-                return name.toLowerCase().includes(lastNameInput);
-            }));
-
-            var matchSubcategory = !subcategoryInput || (book.subcategories && book.subcategories.some(function (subcat) {
-                return subcat.toLowerCase().includes(subcategoryInput);
-            }));
-
-            return matchFirstName && matchLastName && matchSubcategory;
-        });
-
-
-        // Call fetchNextPage to fetch the next set of results
-        fetchNextPage();
-    });
-
-
+    
 }
+
+// Add an event listener to the "Search" button
+var searchButton = document.getElementById('search-button');
+searchButton.addEventListener('click', function () {
+    var category = document.getElementById('queryCategory').value;
+    var author = document.getElementById('author').value;
+    var minLexile = parseFloat(document.getElementById('min-lexile').value);
+    var maxLexile = parseFloat(document.getElementById('max-lexile').value);
+    
+    // Loop through each book in search results
+    for (var i = 0; i < searchResults.length; i++) {
+        var book = searchResults.results[i];
+    
+        
+    }
+    
+    
+});
+
 resultsPerPage = 100;
 // Display the first set of results
 displayResults(searchResults, currentPage, resultsPerPage);
 
-console.log(searchResults);
-console.log(currentPage);
-console.log(resultsPerPage)
-
+console.log(searchResults); // Debug
+console.log(currentPage); // Debug
+console.log(resultsPerPage); // Debug
 
 selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
 // After updating the selectedBooks array in results.js
