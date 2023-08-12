@@ -68,6 +68,14 @@ p {
   text-align: center;
 }
 
+#search-button {
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 10px;
+  border: #000000 solid 2px;
+  background-color: #55a965;
+}
+
 .append-img{
   display: block;
   margin: auto;
@@ -210,4 +218,15 @@ label[for="min-lexile"]:hover::before,
 label[for="max-lexile"]:hover::before {
   visibility: visible;
   opacity: 1;
+}
+
+/* <button id="prev-page-button">Previous Page</button>
+<button id="next-page-button">Next Page</button> */
+
+#prev-page-button-top {
+  margin: 10px 0px 10px 0px;
+}
+
+#next-page-button-top {
+  margin: 10px 0px 10px 0px;
 }
