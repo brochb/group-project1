@@ -152,26 +152,84 @@ function updateTime() {
             weatherMessageElement.textContent = "Though outside might be grim, do not feel forlorn, a great book by your side, all worries are torn. As clouds gather or storms start to sway, the words on those pages will whisk them away. So let raindrops patter and thunderstorms swarm, in the world of your book, it is always warm!";
         }
     }
-    
+
 }
 
-// Add an event listener to the "Search" button
-var searchButton = document.getElementById('search-button');
-searchButton.addEventListener('click', function () {
-    var category = document.getElementById('queryCategory').value;
-    var author = document.getElementById('author').value;
-    var minLexile = parseFloat(document.getElementById('min-lexile').value);
-    var maxLexile = parseFloat(document.getElementById('max-lexile').value);
-    
-    // Loop through each book in search results
-    for (var i = 0; i < searchResults.length; i++) {
-        var book = searchResults.results[i];
-    
-        
+// PSEUDO CODE FOR SECONDARY SEACH FUNCTION
+
+// After the initial fetch is done, we are presented with a maximum of 100 book (page 1)
+// Each book is displayed with the Title, image of the cover, authors and the summary.
+// Additionally, there's a lot of information on the book that's not displayed, like Sub-Categories and Lexile
+// The secondary search should focus on these two plus author to narraow the results even more. The only problem is that we can only narrow the slection fromt he 100 books that are being displayed.
+// By selecting a subject from the "Sub-Categories" list, and upon clicking "search", the function should go the displayed books and through the subcategories (searchresults.results[i].subcategories[x]). If the selected subject is present in the array sub-categories of the book, the book should be displayed and the function should move on to the next bool (searchResults.results[i]).
+// The function should do the same for auhtors and for lexile
+
+// For this though, we need to get rid of "Genre" and "Query Category" and add "Sub-Categories"
+// Below, I didn a little logic but not sure how to apply it yet
+
+var subcategoryInput =  'Family & Relationships'; // SInce the list of Sub-Categories is not yet created, I used a value of the list I commented out from "results.html"
+var authorsInput = document.getElementById('author').value;
+for (let i = 0; i < searchResults.results.length; i++) {
+    const book = searchResults.results[i];
+    for (let ii = 0; ii < book.subcategories.length; ii++) {
+        const subCategories = book.subcategories[ii];
+        if (subcategoryInput === subCategories) {
+            console.log(ii)
+        }
     }
-    
-    
-});
+
+    // Author
+    for (let a = 0; a < book.authors.length; a++) {
+        const authors = book.authors[a];
+        if (authorsInput === authors) {
+            console.log(a) // This is a bit trickier because there are many words in auhtoer and not sure how to make one match be enough for the criteria to be accepted
+        }
+    }
+}
+
+
+
+// Add an event listener to the "Search" button
+// var searchButton = document.getElementById('search-button');
+// searchButton.addEventListener('click', function () {
+//     // Get the search input values
+//     var firstNameInput = document.getElementById("first-name").value.trim().toLowerCase();
+//     var lastNameInput = document.getElementById("last-name").value.trim().toLowerCase();
+//     var subcategoryInput = document.getElementById("subcategory").value.trim().toLowerCase();
+
+//     // Filter the results based on the search inputs
+//     filteredResults = searchResults.results.filter(function (book) {
+//         var matchFirstName = !firstNameInput || (book.author_first_names && book.author_first_names.some(function (name) {
+//             return name.toLowerCase().includes(firstNameInput);
+//         }));
+//         var matchLastName = !lastNameInput || (book.author_last_names && book.author_last_names.some(function (name) {
+//             return name.toLowerCase().includes(lastNameInput);
+//         }));
+//         var matchSubcategory = !subcategoryInput || (book.subcategories && book.subcategories.some(function (subcat) {
+//             return subcat.toLowerCase().includes(subcategoryInput);
+//         }));
+//         return matchFirstName && matchLastName && matchSubcategory;
+//     });
+//     displayResults(searchResults, currentPage, resultsPerPage);
+//     fetchNextPage();
+
+
+    // Display the first set of results
+    // Call fetchNextPage to fetch the next set of results
+    // var category = document.getElementById('queryCategory').value;
+    // var author = document.getElementById('author').value;
+    // var minLexile = parseFloat(document.getElementById('min-lexile').value);
+    // var maxLexile = parseFloat(document.getElementById('max-lexile').value);
+
+    // Loop through each book in search results
+    // for (var i = 0; i < searchResults.length; i++) {
+    //     var book = searchResults.results[i];
+    // if (category === book.categories) {
+
+    // } else {
+
+    // }   
+// });
 
 resultsPerPage = 100;
 // Display the first set of results
