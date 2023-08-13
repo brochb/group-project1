@@ -22,6 +22,8 @@ resultsContainer.textContent = ""; // Clear previous results
 var book;
 var lexile;
 
+console.log(searchResults); // Debug
+
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
 var totalResults = urlParams.get('total_results');
@@ -177,22 +179,32 @@ searchButton.addEventListener('click', function () {
 
     for (let i = 0; i < searchResults.results.length; i++) {
         const book = searchResults.results[i];
-        // Sub-Category
-        for (let ii = 0; ii < book.subcategories.length; ii++) {
-            const subCategories = book.subcategories[ii];
-            if (subcategoryInput === subCategories) {
-                matchingBooks.push(book);
-            }
-        }
+
+        // Subcategory
+        const subcategoryFiltered = book.subcategories.some(subcategory => subcategory === subcategoryInput);
 
         // Author
-        for (let a = 0; a < book.authors.length; a++) {
-            const authors = book.authors[a];
-            if (authors.includes(authorsInput)) {
-                matchingBooks.push(book);
-            }
+        // THERE'S SOMETHING WRONG WITH THIS LOGIC BECAUSE I CAN'T GET ANYTHING TO DISPLAY
+        const authorFiltered = book.authors.some(author => {
+            // Search for the input word in the author's names
+            return author.toLowerCase().includes(authorsInput.trim().toLowerCase());
+        });
+
+        if (subcategoryFiltered && authorFiltered) {
+            matchingBooks.push(book);
         }
     }
+
+    if (matchingBooks.length > 0) {
+        for (var i = 0; i < matchingBooks.length; i++) {
+            // Display matching books
+        }
+    } else {
+        // Display a message indicating no matching books were found
+        resultsContainer.textContent = "No matching books found.";
+    }
+
+    console.log(matchingBooks); // Debug
 
     for (var i = 0; i < matchingBooks.length; i++) {
         var newBooks = matchingBooks[i];
