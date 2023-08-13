@@ -18,8 +18,9 @@ var currentPageElement = document.getElementById('currentPage');
 var newApiUrl;
 var page;
 var resultsContainer = document.getElementById("results-display");
-resultsContainer.innerHTML = ""; // Clear previous results
+resultsContainer.textContent = ""; // Clear previous results
 var book;
+var lexile;
 
 // Get the query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
@@ -39,18 +40,14 @@ totalResultsElement.textContent = formattedTotalResults;
 totalPagesElement.textContent = formattedTotalPages;
 currentPageElement.textContent = currentPage + ' of ' + formattedTotalPages
 
-console.log(formattedTotalPages); // Debug
-
 function displayResults(results, page, resultsPerPage) {
     page = page || 1;
 
     var startIndex = (page - 1) * resultsPerPage;
     var endIndex = Math.min(startIndex + resultsPerPage, results.total_results);
 
-    console.log(resultsPerPage);
-
     var resultsContainer = document.getElementById("results-display");
-    resultsContainer.innerHTML = ""; // Clear previous results
+    resultsContainer.textContent = ""; // Clear previous results
 
     for (var i = startIndex; i < endIndex && i < results.results.length; i++) {
         book = results.results[i];
@@ -160,33 +157,97 @@ function updateTime() {
 // After the initial fetch is done, we are presented with a maximum of 100 book (page 1)
 // Each book is displayed with the Title, image of the cover, authors and the summary.
 // Additionally, there's a lot of information on the book that's not displayed, like Sub-Categories and Lexile
-// The secondary search should focus on these two plus author to narraow the results even more. The only problem is that we can only narrow the slection fromt he 100 books that are being displayed.
+// The secondary search should focus on these two plus author to narrow the results even more. The only problem is that we can only narrow the slection fromt the 100 books that are being displayed.
 // By selecting a subject from the "Sub-Categories" list, and upon clicking "search", the function should go the displayed books and through the subcategories (searchresults.results[i].subcategories[x]). If the selected subject is present in the array sub-categories of the book, the book should be displayed and the function should move on to the next bool (searchResults.results[i]).
 // The function should do the same for auhtors and for lexile
 
 // For this though, we need to get rid of "Genre" and "Query Category" and add "Sub-Categories"
 // Below, I didn a little logic but not sure how to apply it yet
 
-var subcategoryInput =  'Family & Relationships'; // SInce the list of Sub-Categories is not yet created, I used a value of the list I commented out from "results.html"
-var authorsInput = document.getElementById('author').value;
-for (let i = 0; i < searchResults.results.length; i++) {
-    const book = searchResults.results[i];
-    for (let ii = 0; ii < book.subcategories.length; ii++) {
-        const subCategories = book.subcategories[ii];
-        if (subcategoryInput === subCategories) {
-            console.log(ii)
+// Add an event listener to the "Search" button
+var searchButton = document.getElementById('search-button');
+searchButton.addEventListener('click', function () {
+    var subcategoryInput = document.getElementById('subCategory').value;
+    var authorsInput = document.getElementById('author').value;
+    var resultsContainer = document.getElementById("results-display");
+    resultsContainer.textContent = ""; // Clear previous results
+
+    // Create an array to store books that match the criteria
+    var matchingBooks = [];
+
+    for (let i = 0; i < searchResults.results.length; i++) {
+        const book = searchResults.results[i];
+        // Sub-Category
+        for (let ii = 0; ii < book.subcategories.length; ii++) {
+            const subCategories = book.subcategories[ii];
+            if (subcategoryInput === subCategories) {
+                matchingBooks.push(book);
+            }
+        }
+
+        // Author
+        for (let a = 0; a < book.authors.length; a++) {
+            const authors = book.authors[a];
+            if (authors.includes(authorsInput)) {
+                matchingBooks.push(book);
+            }
         }
     }
 
-    // Author
-    for (let a = 0; a < book.authors.length; a++) {
-        const authors = book.authors[a];
-        if (authorsInput === authors) {
-            console.log(a) // This is a bit trickier because there are many words in auhtoer and not sure how to make one match be enough for the criteria to be accepted
-        }
-    }
-}
+    for (var i = 0; i < matchingBooks.length; i++) {
+        var newBooks = matchingBooks[i];
+        var title = newBooks.title;
+        var authors = newBooks.authors.join(", ");
+        var summary = newBooks.summary;
+        var coverImg = newBooks.published_works[0].cover_art_url;
+        var lexile = newBooks.measurements.english.lexile;
+        // You can add more properties like author_first_names, author_last_names, etc., if needed.
 
+        // Create a container for each book
+        var bookContainer = document.createElement("div");
+        bookContainer.classList.add("book-item");
+
+        // Create and append elements for title, summary and authors
+        var titleElement = document.createElement("h3");
+        titleElement.textContent = title;
+        var authorsElement = document.createElement("p");
+        authorsElement.textContent = "Authors: " + authors;
+        authorsElement.setAttribute("style", "color: blue; text-decoration: ")
+        var summaryElement = document.createElement("p");
+        if (summary == "") {
+            summaryElement.textContent = "Unfortunately, there is no summary that can be found. (╯°□°）╯︵ ┻━┻ "
+        } else {
+            summaryElement.textContent = summary;
+        }
+        var bookImgElement = document.createElement("img");
+        bookImgElement.setAttribute("src", coverImg);
+        bookImgElement.setAttribute("class", "append-img");
+
+        // Create a checkbox for each book with a label
+        var checkboxLabel = document.createElement("label");
+        var checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("class", "book-checkbox");
+        checkbox.setAttribute("data-index", i); // Store the index of the book
+
+        // Create a text node for the label
+        var labelText = document.createTextNode("Select this Book");
+
+        // Append the checkbox and label text to the label element
+        checkboxLabel.appendChild(checkbox);
+        checkboxLabel.appendChild(labelText);
+
+        // Append title, summary, authors, and checkboxes to the book container
+        bookContainer.appendChild(titleElement);
+        bookContainer.appendChild(bookImgElement)
+        bookContainer.appendChild(authorsElement);
+        bookContainer.appendChild(summaryElement);
+        bookContainer.appendChild(checkboxLabel);
+
+        // Append the book container to the results container
+        resultsContainer.appendChild(bookContainer);
+    }
+});
 
 
 // Add an event listener to the "Search" button
@@ -214,30 +275,26 @@ for (let i = 0; i < searchResults.results.length; i++) {
 //     fetchNextPage();
 
 
-    // Display the first set of results
-    // Call fetchNextPage to fetch the next set of results
-    // var category = document.getElementById('queryCategory').value;
-    // var author = document.getElementById('author').value;
-    // var minLexile = parseFloat(document.getElementById('min-lexile').value);
-    // var maxLexile = parseFloat(document.getElementById('max-lexile').value);
+// Display the first set of results
+// Call fetchNextPage to fetch the next set of results
+// var category = document.getElementById('queryCategory').value;
+// var author = document.getElementById('author').value;
+// var minLexile = parseFloat(document.getElementById('min-lexile').value);
+// var maxLexile = parseFloat(document.getElementById('max-lexile').value);
 
-    // Loop through each book in search results
-    // for (var i = 0; i < searchResults.length; i++) {
-    //     var book = searchResults.results[i];
-    // if (category === book.categories) {
+// Loop through each book in search results
+// for (var i = 0; i < searchResults.length; i++) {
+//     var book = searchResults.results[i];
+// if (category === book.categories) {
 
-    // } else {
+// } else {
 
-    // }   
+// }   
 // });
 
 resultsPerPage = 100;
 // Display the first set of results
 displayResults(searchResults, currentPage, resultsPerPage);
-
-console.log(searchResults); // Debug
-console.log(currentPage); // Debug
-console.log(resultsPerPage); // Debug
 
 selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
 // After updating the selectedBooks array in results.js
@@ -268,9 +325,6 @@ checkboxes.forEach(function (checkbox) {
 
 var history = document.getElementById("history")
 var historyList = document.getElementById("history-list")
-
-
-console.log(oldApiUrl)
 var nextPageButton = document.getElementById('next-page-button');
 var prevPageButton = document.getElementById('prev-page-button');
 var nextPageButtonTop = document.getElementById('next-page-button-top');
@@ -324,7 +378,7 @@ nextPageButtonTop.addEventListener('click', () => {
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
             resultsContainer = document.getElementById("results-display");
-            resultsContainer.innerHTML = ""; // Clear previous results
+            resultsContainer.textContent = ""; // Clear previous results
 
             page = page || 1;
             var startIndex = (page - 1) * resultsPerPage;
@@ -385,14 +439,11 @@ nextPageButtonTop.addEventListener('click', () => {
                 resultsContainer.appendChild(bookContainer);
 
             }
-
-            // Optionally, you might also want to update the pagination links or buttons here
+            // Update the previous and next button states
+            updatePreviousButtonState();
+            updateNextButtonState();
         })
         .catch(error => console.log('error', error));
-
-    // Update the next page button state based on the new currentPage
-    updateNextButtonState();
-
 })
 
 prevPageButtonTop.addEventListener('click', () => {
@@ -443,7 +494,7 @@ prevPageButtonTop.addEventListener('click', () => {
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
             resultsContainer = document.getElementById("results-display");
-            resultsContainer.innerHTML = ""; // Clear previous results
+            resultsContainer.textContent = ""; // Clear previous results
 
             page = page || 1;
             var startIndex = (page - 1) * resultsPerPage;
@@ -504,13 +555,11 @@ prevPageButtonTop.addEventListener('click', () => {
                 resultsContainer.appendChild(bookContainer);
 
             }
-
-            // Optionally, you might also want to update the pagination links or buttons here
+            // Update the previous and next button states
+            updatePreviousButtonState();
+            updateNextButtonState();
         })
         .catch(error => console.log('error', error));
-    // Update the previous page button state based on the new currentPage
-    updatePreviousButtonState();
-
 })
 
 nextPageButton.addEventListener('click', () => {
@@ -562,7 +611,7 @@ nextPageButton.addEventListener('click', () => {
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
             resultsContainer = document.getElementById("results-display");
-            resultsContainer.innerHTML = ""; // Clear previous results
+            resultsContainer.textContent = ""; // Clear previous results
 
             page = page || 1;
             var startIndex = (page - 1) * resultsPerPage;
@@ -623,14 +672,11 @@ nextPageButton.addEventListener('click', () => {
                 resultsContainer.appendChild(bookContainer);
 
             }
-
-            // Optionally, you might also want to update the pagination links or buttons here
+            // Update the previous and next button states
+            updatePreviousButtonState();
+            updateNextButtonState();
         })
         .catch(error => console.log('error', error));
-
-    // Update the next page button state based on the new currentPage
-    updateNextButtonState();
-
 })
 
 prevPageButton.addEventListener('click', () => {
@@ -682,7 +728,7 @@ prevPageButton.addEventListener('click', () => {
             sessionStorage.setItem('searchResults', JSON.stringify(searchResults));
 
             resultsContainer = document.getElementById("results-display");
-            resultsContainer.innerHTML = ""; // Clear previous results
+            resultsContainer.textContent = ""; // Clear previous results
 
             page = page || 1;
             var startIndex = (page - 1) * resultsPerPage;
@@ -743,12 +789,11 @@ prevPageButton.addEventListener('click', () => {
                 resultsContainer.appendChild(bookContainer);
 
             }
+            // Update the previous and next button states
+            updatePreviousButtonState();
+            updateNextButtonState();
         })
         .catch(error => console.log('error', error));
-
-    // Update the previous page button state based on the new currentPage
-    updatePreviousButtonState();
-
 })
 
 // Function to update the state of the previous page button
@@ -764,12 +809,16 @@ function updatePreviousButtonState() {
 
 // Function to update the state of the next page button
 function updateNextButtonState() {
-    if (currentPage === parseFloat(formattedTotalPages)) {
-        nextPageButton.disabled = true;
-        nextPageButtonTop.disabled = true;
-    } else {
+    // Assuming formattedTotalPages is a string with commas
+    var parsedTotalPages = parseInt(formattedTotalPages.replace(/,/g, ''));
+
+    // Compare currentPage with parsedTotalPages
+    if (currentPage < parsedTotalPages) {
         nextPageButton.disabled = false;
         nextPageButtonTop.disabled = false;
+    } else {
+        nextPageButton.disabled = true;
+        nextPageButtonTop.disabled = true;
     }
 }
 

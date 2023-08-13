@@ -108,7 +108,7 @@ function errorCallback(error) {
 
 function displaySelectedBooksFromLocalStorage() {
     var inventoryElement = document.getElementById("inventory");
-    inventoryElement.innerHTML = ""; // Clear previous inventory
+    inventoryElement.textContent = ""; // Clear previous inventory
 
     var selectedBooksFromLocal = JSON.parse(localStorage.getItem('selectedBooks'));
 
