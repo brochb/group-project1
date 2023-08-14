@@ -170,8 +170,8 @@ function updateTime() {
 var searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', function () {
     var subcategoryInput = document.getElementById('subCategory').value;
-    var authorsInput = document.getElementById('author').value;
     var resultsContainer = document.getElementById("results-display");
+    var authorNameInput = document.getElementById("author-name").value.trim();
     resultsContainer.textContent = ""; // Clear previous results
 
     // Create an array to store books that match the criteria
@@ -185,10 +185,22 @@ searchButton.addEventListener('click', function () {
 
         // Author
         // THERE'S SOMETHING WRONG WITH THIS LOGIC BECAUSE I CAN'T GET ANYTHING TO DISPLAY
-        var authorFiltered = book.authors.some(author => {
-            // Search for the input word in the author's names
-            return author.toLowerCase().includes(authorsInput.trim().toLowerCase());
-        });
+        // var authorFiltered = book.authors.some(author => {
+        //     // Search for the input word in the author's names
+        //     return author.toLowerCase().includes(authorsInput.trim().toLowerCase());
+        // });
+
+        // Author
+        // Loop through each author's first name in the current book
+
+        for (let j = 0; j < book.authors.length; j++) {
+            var authorFiltered = book.authors[j];
+            
+            // Check if the input matches the current author's first name
+            if (authorFiltered.includes(authorNameInput)) {
+                matchingBooks.push(book);
+            }
+        }
 
         // Lexile
         var lexileMin = document.getElementById('min-lexile').value;
@@ -198,9 +210,7 @@ searchButton.addEventListener('click', function () {
             matchingBooks.push(book);
         }
 
-        console.log(lexileFiltered); // Debug
-
-        if (subcategoryFiltered && authorFiltered && lexileFiltered) {
+        if (subcategoryFiltered && lexileFiltered && firstNameFiltered && lastNameFiltered) {
             matchingBooks.push(book);
         }
     }
@@ -219,7 +229,7 @@ searchButton.addEventListener('click', function () {
 
     console.log(matchingBooks); // Debug
 
-    for (var i = 0; i < matchingBooks.length; i++) {
+    for (var i = 0; i < matchingBooks.length; i++) { // I just realized that the checkboxes don't save the actual book but the previous book that was in the same spot from the original search
         var newBooks = matchingBooks[i];
         var title = newBooks.title;
         var authors = newBooks.authors.join(", ");
@@ -320,24 +330,6 @@ searchButton.addEventListener('click', function () {
 //     });
 //     displayResults(searchResults, currentPage, resultsPerPage);
 //     fetchNextPage();
-
-
-// Display the first set of results
-// Call fetchNextPage to fetch the next set of results
-// var category = document.getElementById('queryCategory').value;
-// var author = document.getElementById('author').value;
-// var minLexile = parseFloat(document.getElementById('min-lexile').value);
-// var maxLexile = parseFloat(document.getElementById('max-lexile').value);
-
-// Loop through each book in search results
-// for (var i = 0; i < searchResults.length; i++) {
-//     var book = searchResults.results[i];
-// if (category === book.categories) {
-
-// } else {
-
-// }   
-// });
 
 resultsPerPage = 100;
 // Display the first set of results
@@ -868,6 +860,12 @@ function updateNextButtonState() {
         nextPageButtonTop.disabled = true;
     }
 }
+
+
+var reloadButton = document.getElementById('reload-button');
+reloadButton.addEventListener('click', () => {
+    location.reload();
+});
 
 // Call the function initially to set the button state
 updatePreviousButtonState();
