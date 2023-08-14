@@ -235,13 +235,19 @@ label[for="max-lexile"]:hover::before {
   opacity: 1;
 }
 
-/* <button id="prev-page-button">Previous Page</button>
-<button id="next-page-button">Next Page</button> */
-
-#prev-page-button-top {
-  margin: 10px 0px 10px 0px;
+/* Move the reload-button to the opposite side */
+#page-links-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+#prev-page-button-top,
 #next-page-button-top {
+  margin: 10px 2px 10px 2px;
+}
+
+#reload-button {
   margin: 10px 0px 10px 0px;
+  margin-left: auto; /* Move the reload-button to the right */
 }
