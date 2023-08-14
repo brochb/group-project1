@@ -272,6 +272,28 @@ searchButton.addEventListener('click', function () {
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
     }
+    // Add event listeners for checkboxes
+    checkboxes = document.querySelectorAll(".book-checkbox");
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+            var index = parseInt(this.getAttribute("data-index"));
+            var selectedBook = searchResults.results[index];
+
+            if (this.checked) {
+                // Add the selected book to localStorage
+                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                selectedBooks.push(selectedBook);
+                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+            } else {
+                // Remove the selected book from localStorage
+                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                selectedBooks = selectedBooks.filter(function (book) {
+                    return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+                });
+                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+            }
+        });
+    });
 });
 
 
@@ -326,29 +348,27 @@ selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
 localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
 
 // Add event listeners for checkboxes
-function checkboxListener() {
-    var checkboxes = document.querySelectorAll(".book-checkbox");
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-            var index = parseInt(this.getAttribute("data-index"));
-            var selectedBook = searchResults.results[index];
+var checkboxes = document.querySelectorAll(".book-checkbox");
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function () {
+        var index = parseInt(this.getAttribute("data-index"));
+        var selectedBook = searchResults.results[index];
 
-            if (this.checked) {
-                // Add the selected book to localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks.push(selectedBook);
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            } else {
-                // Remove the selected book from localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks = selectedBooks.filter(function (book) {
-                    return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-                });
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            }
-        });
+        if (this.checked) {
+            // Add the selected book to localStorage
+            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks.push(selectedBook);
+            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        } else {
+            // Remove the selected book from localStorage
+            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+            selectedBooks = selectedBooks.filter(function (book) {
+                return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+            });
+            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        }
     });
-}
+});
 
 var history = document.getElementById("history")
 var historyList = document.getElementById("history-list")
