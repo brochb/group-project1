@@ -81,6 +81,16 @@ p {
   background-color: #55a965;
 }
 
+#search-button:hover {
+  opacity: .8;
+  zoom: 1.1;
+}
+
+#search-button:active {
+  background-color: rgb(0, 255, 166);
+  zoom: 1.1;
+}
+
 .append-img{
   display: block;
   margin: auto;
