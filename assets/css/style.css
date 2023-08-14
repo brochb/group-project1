@@ -228,6 +228,11 @@ label[for="max-lexile"]:hover::before {
   left: 65%;
 }
 
+#subCategory,
+#author-name {
+  padding: 5px 0px 5px 0px;
+}
+
 /* Show tooltip on hover */
 label[for="min-lexile"]:hover::before,
 label[for="max-lexile"]:hover::before {
