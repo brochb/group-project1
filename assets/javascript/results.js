@@ -195,7 +195,7 @@ searchButton.addEventListener('click', function () {
 
         for (let j = 0; j < book.authors.length; j++) {
             var authorFiltered = book.authors[j];
-            
+
             // Check if the input matches the current author's first name
             if (authorFiltered.includes(authorNameInput)) {
                 matchingBooks.push(book);
@@ -227,9 +227,7 @@ searchButton.addEventListener('click', function () {
     var bookPageResults = document.getElementById('book-results');
     bookPageResults.textContent = "";
 
-    console.log(matchingBooks); // Debug
-
-    for (var i = 0; i < matchingBooks.length; i++) { // I just realized that the checkboxes don't save the actual book but the previous book that was in the same spot from the original search
+    for (var i = 0; i < matchingBooks.length; i++) { // I just realized that the checkboxes don't save the actual book but the previous book that was in the same spot from the original search, and it has to do with line 289 in the checkboxes funtion ("i" is from the searchResults.results and not the new array matchingBooks.)
         var newBooks = matchingBooks[i];
         var title = newBooks.title;
         var authors = newBooks.authors.join(", ");
@@ -281,7 +279,31 @@ searchButton.addEventListener('click', function () {
 
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
+
+        // // Add event listeners for checkboxes
+        // checkboxes = document.querySelectorAll(".book-checkbox");
+        // checkboxes.forEach(function (checkbox) {
+        //     checkbox.addEventListener("change", function () {
+        //         var index = parseInt(this.getAttribute("data-index"));
+        //         var selectedBook = newBooks;
+
+        //         if (this.checked) {
+        //             // Add the selected book to localStorage
+        //             selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+        //             selectedBooks.push(selectedBook);
+        //             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        //         } else {
+        //             // Remove the selected book from localStorage
+        //             selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+        //             selectedBooks = selectedBooks.filter(function (book) {
+        //                 return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+        //             });
+        //             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+        //         }
+        //     });
+        // });
     }
+
     // Add event listeners for checkboxes
     checkboxes = document.querySelectorAll(".book-checkbox");
     checkboxes.forEach(function (checkbox) {
