@@ -178,19 +178,29 @@ searchButton.addEventListener('click', function () {
     var matchingBooks = [];
 
     for (let i = 0; i < searchResults.results.length; i++) {
-        const book = searchResults.results[i];
+        var book = searchResults.results[i];
 
         // Subcategory
-        const subcategoryFiltered = book.subcategories.some(subcategory => subcategory === subcategoryInput);
+        var subcategoryFiltered = book.subcategories.some(subcategory => subcategory === subcategoryInput);
 
         // Author
         // THERE'S SOMETHING WRONG WITH THIS LOGIC BECAUSE I CAN'T GET ANYTHING TO DISPLAY
-        const authorFiltered = book.authors.some(author => {
+        var authorFiltered = book.authors.some(author => {
             // Search for the input word in the author's names
             return author.toLowerCase().includes(authorsInput.trim().toLowerCase());
         });
 
-        if (subcategoryFiltered && authorFiltered) {
+        // Lexile
+        var lexileMin = document.getElementById('min-lexile').value;
+        var lexileMax = document.getElementById('max-lexile').value;
+        var lexileFiltered = book.measurements.english.lexile
+        if (lexileFiltered >= lexileMin && lexileFiltered <= lexileMax) {
+            matchingBooks.push(book);
+        }
+
+        console.log(lexileFiltered); // Debug
+
+        if (subcategoryFiltered && authorFiltered && lexileFiltered) {
             matchingBooks.push(book);
         }
     }
@@ -203,6 +213,9 @@ searchButton.addEventListener('click', function () {
         // Display a message indicating no matching books were found
         resultsContainer.textContent = "No matching books found.";
     }
+
+    var bookPageResults = document.getElementById('book-results');
+    bookPageResults.textContent = "";
 
     console.log(matchingBooks); // Debug
 
@@ -313,27 +326,29 @@ selectedBooks = JSON.parse(localStorage.getItem('selectedBooks'));
 localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
 
 // Add event listeners for checkboxes
-var checkboxes = document.querySelectorAll(".book-checkbox");
-checkboxes.forEach(function (checkbox) {
-    checkbox.addEventListener("change", function () {
-        var index = parseInt(this.getAttribute("data-index"));
-        var selectedBook = searchResults.results[index];
+function checkboxListener() {
+    var checkboxes = document.querySelectorAll(".book-checkbox");
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+            var index = parseInt(this.getAttribute("data-index"));
+            var selectedBook = searchResults.results[index];
 
-        if (this.checked) {
-            // Add the selected book to localStorage
-            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-            selectedBooks.push(selectedBook);
-            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-        } else {
-            // Remove the selected book from localStorage
-            selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-            selectedBooks = selectedBooks.filter(function (book) {
-                return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-            });
-            localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-        }
+            if (this.checked) {
+                // Add the selected book to localStorage
+                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                selectedBooks.push(selectedBook);
+                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+            } else {
+                // Remove the selected book from localStorage
+                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                selectedBooks = selectedBooks.filter(function (book) {
+                    return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+                });
+                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+            }
+        });
     });
-});
+}
 
 var history = document.getElementById("history")
 var historyList = document.getElementById("history-list")
