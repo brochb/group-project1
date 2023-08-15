@@ -174,21 +174,20 @@ searchButton.addEventListener('click', function () {
     // var authorNameInput = document.getElementById("author-name").value.trim();
     resultsContainer.textContent = ""; // Clear previous results
 
-    
     // Create an array to store books that match the criteria
-    var matchingBooks = [];
+    var matchingBooksSubcategory = [];
     for (let i = 0; i < searchResults.results.length; i++) {
-        var book = searchResults.results[i];
+        var bookSubcategory = searchResults.results[i];
 
         // Subcategory
-        var subcategoryFiltered = book.subcategories.some(subcategory => subcategory === subcategoryInput);
+        var subcategoryFiltered = bookSubcategory.subcategories.some(subcategory => subcategory === subcategoryInput);
         if (subcategoryFiltered === true) {
-            matchingBooks.push(book)
+            matchingBooksSubcategory.push(bookSubcategory)
         }
     }
-    
-    if (matchingBooks.length > 0) {
-        for (var i = 0; i < matchingBooks.length; i++) {
+
+    if (matchingBooksSubcategory.length > 0) {
+        for (var i = 0; i < matchingBooksSubcategory.length; i++) {
             // Display matching books
         }
     } else {
@@ -199,6 +198,28 @@ searchButton.addEventListener('click', function () {
     var bookPageResults = document.getElementById('book-results');
     bookPageResults.textContent = "";
 
+    var keyWordsInput = document.getElementById('keyWords').value.toLowerCase();
+    var matchingBooksKeyWords = [];
+    var keyWordsFiltered = [];
+    for (let z = 0; z < searchResults.results.length; z++) {
+        var bookKeyWords = searchResults.results[z];
+
+        // Combine title keywords and vocab words
+        const titleSearch = bookKeyWords.title_search;
+        var titleArray = titleSearch.split(" ");
+        var vocabWords = bookKeyWords.vocab_words;
+        var keyWordsCombined = titleArray.concat(vocabWords);
+
+        // Convert words to lowercase and check if any keyword matches user input
+        var keyWordsFiltered = keyWordsCombined.map(word => word.toLowerCase());
+
+        // Check if any keyword matches user input
+        if (keyWordsFiltered.includes(keyWordsInput)) {
+            matchingBooksKeyWords.push(bookKeyWords);
+        }
+    }
+
+    var matchingBooks = matchingBooksSubcategory.concat(matchingBooksKeyWords);
     for (var i = 0; i < matchingBooks.length; i++) { // I just realized that the checkboxes don't save the actual book but the previous book that was in the same spot from the original search, and it has to do with line 289 in the checkboxes funtion ("i" is from the searchResults.results and not the new array matchingBooks.)
         var newBooks = matchingBooks[i];
         var title = newBooks.title;
@@ -274,6 +295,8 @@ searchButton.addEventListener('click', function () {
                 }
             });
         });
+        // Inside the loop where you display books, you can use the same data-index attribute as before
+        checkbox.setAttribute("data-index", i);
     }
 });
 
