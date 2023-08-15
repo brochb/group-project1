@@ -222,12 +222,13 @@ searchButton.addEventListener('click', function () {
     localStorage.removeItem('Current Page');
 });
 
-// Add event listener for the "Clear Selection" button
-var clearSelectionButton = document.getElementById("clear-selection-button");
-clearSelectionButton.addEventListener("click", function () {
+// // Add event listener for the "Clear Selection" button
+// var clearSelectionButton = document.getElementById("clear-selection-button");
+// clearSelectionButton.addEventListener("click", function () {
 
-    localStorage.removeItem('selectedBooks');
-    // Refresh the page to display the recently cleared storage
-    window.location.reload();
-});
+    
+//     localStorage.removeItem('selectedBooks');
+//     // Refresh the page to display the recently cleared storage
+//     // window.location.reload();
+// });
 

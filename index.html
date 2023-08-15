@@ -83,10 +83,20 @@
                                <div class = "media-content">
                                   <div class = "content">
                                      <p>
-                                        <strong>The saved history section will now be deleted.</strong>
+                                        <!-- text to educate the user on the modal functions. -->
+                                        <strong>Are you sure you want to clear history?</strong>
+                                        <br>
+                                        <small>To exit screen without clearing history press the X in the top right corner of the screen.</small>
+                                        <br>
+                                        <small>--------------------------------------------------------------------------------------------------------</small>
+                                        <br>
+                                        <small>Press the red button below to clear saved history.</small>
                                      </p>
-                                  </div>
-                               </div>
+                                    </div>
+                                    <nav>
+                                        <div class ="delete has-background-danger">Clear History</div>
+                                    </nav>  
+                               </div>        
                             </article>
                          </div>
                       </div>
@@ -115,15 +125,21 @@
     </footer>
 
     <script>
+        // opens up the model when button is clicked.
         $(".modal-button").click(function() {
            var target = $(this).data("target");
            $("html").addClass("is-clipped");
            $(target).addClass("is-active");
         });
-        
+        // closes the modal when x in top right corner is clicked.
         $(".modal-close").click(function() {
            $("html").removeClass("is-clipped");
            $(this).parent().removeClass("is-active");
+        });
+        // allows the saved history to be delete when the red button in the modal is pressed.
+        $(".delete").click(function() {
+            localStorage.removeItem('selectedBooks');
+            window.location.reload();
         });
      </script>
 
