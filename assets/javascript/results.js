@@ -251,55 +251,31 @@ searchButton.addEventListener('click', function () {
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
 
-        // // Add event listeners for checkboxes
-        // checkboxes = document.querySelectorAll(".book-checkbox");
-        // checkboxes.forEach(function (checkbox) {
-        //     checkbox.addEventListener("change", function () {
-        //         var index = parseInt(this.getAttribute("data-index"));
-        //         var selectedBook = newBooks;
+        // Add event listeners for checkboxes
+        checkboxes = document.querySelectorAll(".book-checkbox");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                var index = parseInt(this.getAttribute("data-index"));
+                var selectedBook = newBooks;
 
-        //         if (this.checked) {
-        //             // Add the selected book to localStorage
-        //             selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-        //             selectedBooks.push(selectedBook);
-        //             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-        //         } else {
-        //             // Remove the selected book from localStorage
-        //             selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-        //             selectedBooks = selectedBooks.filter(function (book) {
-        //                 return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-        //             });
-        //             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-        //         }
-        //     });
-        // });
+                if (this.checked) {
+                    // Add the selected book to localStorage
+                    selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                    selectedBooks.push(selectedBook);
+                    localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+                } else {
+                    // Remove the selected book from localStorage
+                    selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                    selectedBooks = selectedBooks.filter(function (book) {
+                        return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+                    });
+                    localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+                }
+            });
+        });
     }
 });
 
-
-// Add an event listener to the "Search" button
-// var searchButton = document.getElementById('search-button');
-// searchButton.addEventListener('click', function () {
-//     // Get the search input values
-//     var firstNameInput = document.getElementById("first-name").value.trim().toLowerCase();
-//     var lastNameInput = document.getElementById("last-name").value.trim().toLowerCase();
-//     var subcategoryInput = document.getElementById("subcategory").value.trim().toLowerCase();
-
-//     // Filter the results based on the search inputs
-//     filteredResults = searchResults.results.filter(function (book) {
-//         var matchFirstName = !firstNameInput || (book.author_first_names && book.author_first_names.some(function (name) {
-//             return name.toLowerCase().includes(firstNameInput);
-//         }));
-//         var matchLastName = !lastNameInput || (book.author_last_names && book.author_last_names.some(function (name) {
-//             return name.toLowerCase().includes(lastNameInput);
-//         }));
-//         var matchSubcategory = !subcategoryInput || (book.subcategories && book.subcategories.some(function (subcat) {
-//             return subcat.toLowerCase().includes(subcategoryInput);
-//         }));
-//         return matchFirstName && matchLastName && matchSubcategory;
-//     });
-//     displayResults(searchResults, currentPage, resultsPerPage);
-//     fetchNextPage();
 
 resultsPerPage = 100;
 // Display the first set of results
@@ -831,7 +807,6 @@ function updateNextButtonState() {
     }
 }
 
-
 var reloadButton = document.getElementById('reload-button');
 reloadButton.addEventListener('click', () => {
     location.reload();
@@ -840,6 +815,5 @@ reloadButton.addEventListener('click', () => {
 // Call the function initially to set the button state
 updatePreviousButtonState();
 updateNextButtonState();
-
 
 setInterval(updateTime, 1000);
