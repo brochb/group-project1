@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
         historyList.appendChild(listItem);
 
     });
-
+    
     // Call the function to display selected books from sessionStorage on page load
     displaySelectedBooksFromLocalStorage();
 });
@@ -222,17 +222,4 @@ searchButton.addEventListener('click', function () {
     localStorage.removeItem('Current Page');
 });
 
-// Add event listener for the "Clear Selection" button
-var clearSelectionButton = document.getElementById("clear-selection-button");
-clearSelectionButton.addEventListener("click", function () {
-    // Display a confirmation dialog
-    var confirmClear = window.confirm("Are you sure you want to clear the selection of books? This action cannot be undone.");
-
-    // If user confirms, clear selected books from localStorage
-    if (confirmClear) {
-        localStorage.removeItem('selectedBooks');
-        // Refresh the page to display the recently cleared storage
-        window.location.reload();
-    }
-});
 
