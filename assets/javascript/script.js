@@ -44,35 +44,35 @@ function successCallback(position) {
     if (queryInput.trim() !== "") {
         // Construct the base apiUrl
         apiUrl = 'https://book-finder1.p.rapidapi.com/api/search?book_type=' + queryInput;
-    
+
         // Build an array to hold the search parameters and their values
         const searchParams = [];
-    
+
         // Add queryCategory if provided
         if (queryCategory.trim() !== "") {
             searchParams.push(queryCategory);
         }
-    
+
         // Add lexile_min if provided
         if (minLexile.trim() !== "") {
             searchParams.push('lexile_min=' + minLexile);
         }
-    
+
         // Add lexile_max if provided
         if (maxLexile.trim() !== "") {
             searchParams.push('lexile_max=' + maxLexile);
         }
-    
+
         // Add author if provided
         if (author.trim() !== "") {
             searchParams.push('author=' + author);
         }
-    
+
         // Combine the search parameters into the apiUrl
         if (searchParams.length > 0) {
             apiUrl += '&' + searchParams.join('&');
         }
-    
+
         // Add the remaining parameters and redirect logic
         apiUrl += '&page=1&results_per_page=100';
 
@@ -90,6 +90,7 @@ function successCallback(position) {
             .then(result => {
                 // Save the results in the session storage before redirecting
                 sessionStorage.setItem('searchResults', JSON.stringify(result));
+
                 // Redirect to the results page
                 window.location.href = "results.html?total_results=" + result.total_results + "&total_pages=" + result.total_pages;
             })
@@ -107,7 +108,7 @@ function errorCallback(error) {
 
 function displaySelectedBooksFromLocalStorage() {
     var inventoryElement = document.getElementById("inventory");
-    inventoryElement.innerHTML = ""; // Clear previous inventory
+    inventoryElement.textContent = ""; // Clear previous inventory
 
     var selectedBooksFromLocal = JSON.parse(localStorage.getItem('selectedBooks'));
 
@@ -141,7 +142,7 @@ function displaySelectedBooksFromLocalStorage() {
             bookSummary.textContent = 'Summary: ' + book.summary;
             bookContainer.appendChild(bookSummary);
             // Need to add the field that we would like to display and don't forget to append them below
-            
+
             // Append the li element to the book container
 
             // Append the book container to the inventory element
@@ -155,13 +156,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const historyList = document.getElementById('history-list');
     const queryHistory = JSON.parse(localStorage.getItem('queryHistory')) || [];
 
+    // Reverse the queryHistory array
+    queryHistory.reverse();
+
     queryHistory.forEach(query => {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
         link.href = '#';
         // Convert query object properties to an array
         const queryArray = Object.values(query);
-        link.textContent = queryArray.join(' ');
+        // Capitalizing value1 and value2 to make it look pretty
+        const formattedValue1 = queryArray[0].charAt(0).toUpperCase() + queryArray[0].slice(1);
+        // Filter out zero values from the queryArray
+        const filteredQueryArray = queryArray.filter(value => value !== '');
+        // Separate the values in the array by "/"
+        formattedQuery = filteredQueryArray.join(' / ');
+        // Join the non-zero values (excluding the first value) with "/"
+        formattedQuery = filteredQueryArray.slice(1).join(' / ');
+        link.textContent = formattedValue1 + ' / ' + formattedQuery;
 
         link.addEventListener('click', function () {
             const [value1, value2, value3, value4, value5] = queryArray;
@@ -205,12 +217,22 @@ searchButton.addEventListener('click', function () {
     queryHistory.push(combinedValues);
     if (queryHistory.length > 6) queryHistory.shift();
     localStorage.setItem('queryHistory', JSON.stringify(queryHistory));
+
+    // Add the following line to reset the locally stored current page
+    localStorage.removeItem('Current Page');
 });
 
 // Add event listener for the "Clear Selection" button
 var clearSelectionButton = document.getElementById("clear-selection-button");
 clearSelectionButton.addEventListener("click", function () {
-    // Clear selected books from localStorage
-    localStorage.removeItem('selectedBooks');
+    // Display a confirmation dialog
+    var confirmClear = window.confirm("Are you sure you want to clear the selection of books? This action cannot be undone.");
+
+    // If user confirms, clear selected books from localStorage
+    if (confirmClear) {
+        localStorage.removeItem('selectedBooks');
+        // Refresh the page to display the recently cleared storage
+        window.location.reload();
+    }
 });
 
