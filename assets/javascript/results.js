@@ -277,8 +277,8 @@ searchButton.addEventListener('click', function () {
     }
 });
 
-var searchButton = document.getElementById('home-button');
-searchButton.addEventListener('click', function () {
+var homeButton = document.getElementById('home-button');
+homeButton.addEventListener('click', function () {
     window.location.href = "index.html"
 });
 
