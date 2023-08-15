@@ -174,6 +174,7 @@ searchButton.addEventListener('click', function () {
     var authorNameInput = document.getElementById("author-name").value.trim();
     resultsContainer.textContent = ""; // Clear previous results
 
+    
     // Create an array to store books that match the criteria
     var matchingBooks = [];
 
@@ -326,6 +327,11 @@ searchButton.addEventListener('click', function () {
             }
         });
     });
+});
+
+var searchButton = document.getElementById('home-button');
+searchButton.addEventListener('click', function () {
+    window.location.href = "index.html"
 });
 
 
