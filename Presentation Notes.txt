@@ -10,7 +10,7 @@ index.html, AND results.html each coresponding to a different webpage.
 		Explain how the secondary search specifically allows the user to narrow down their search
 		if there are to many results.
 
-The importance of even just the smallest Design Documentation (desginDoc).
+The importance of even the smallest Design Documentation (desginDoc).
 
 The structure of the README and how it assists the user in using the application.
 
@@ -52,7 +52,11 @@ style.css coresponds to all elements, and classes in both html pages
 		usage of CSS Framework, and what it does for our application.
 
 		What the :root selector is covering
-			Font Family
-			
-			:hover, media screen listeners, 
+
+	Media Screen listeners
+
+	The exploration of the functionality of the page change button, and why.
 	
+
+**Present primarily by ALL:
+	The intended function of the application
