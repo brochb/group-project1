@@ -83,7 +83,16 @@ p {
   background-color: #55a965;
 }
 
-#search-button:hover{
+#home-button{
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  border: #000000 solid 2px;
+  background-color: #d9a441;
+}
+
+#search-button:hover,
+#home-button:hover{
   opacity: .8;
   zoom: 1.1;
 }
