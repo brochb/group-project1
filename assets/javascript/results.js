@@ -171,50 +171,21 @@ var searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', function () {
     var subcategoryInput = document.getElementById('subCategory').value;
     var resultsContainer = document.getElementById("results-display");
-    var authorNameInput = document.getElementById("author-name").value.trim();
+    // var authorNameInput = document.getElementById("author-name").value.trim();
     resultsContainer.textContent = ""; // Clear previous results
 
     // Create an array to store books that match the criteria
     var matchingBooks = [];
-
     for (let i = 0; i < searchResults.results.length; i++) {
         var book = searchResults.results[i];
 
         // Subcategory
         var subcategoryFiltered = book.subcategories.some(subcategory => subcategory === subcategoryInput);
-
-        // Author
-        // THERE'S SOMETHING WRONG WITH THIS LOGIC BECAUSE I CAN'T GET ANYTHING TO DISPLAY
-        // var authorFiltered = book.authors.some(author => {
-        //     // Search for the input word in the author's names
-        //     return author.toLowerCase().includes(authorsInput.trim().toLowerCase());
-        // });
-
-        // Author
-        // Loop through each author's first name in the current book
-
-        for (let j = 0; j < book.authors.length; j++) {
-            var authorFiltered = book.authors[j];
-
-            // Check if the input matches the current author's first name
-            if (authorFiltered.includes(authorNameInput)) {
-                matchingBooks.push(book);
-            }
-        }
-
-        // Lexile
-        var lexileMin = document.getElementById('min-lexile').value;
-        var lexileMax = document.getElementById('max-lexile').value;
-        var lexileFiltered = book.measurements.english.lexile
-        if (lexileFiltered >= lexileMin && lexileFiltered <= lexileMax) {
-            matchingBooks.push(book);
-        }
-
-        if (subcategoryFiltered && lexileFiltered && firstNameFiltered && lastNameFiltered) {
-            matchingBooks.push(book);
+        if (subcategoryFiltered === true) {
+            matchingBooks.push(book)
         }
     }
-
+    
     if (matchingBooks.length > 0) {
         for (var i = 0; i < matchingBooks.length; i++) {
             // Display matching books
@@ -303,29 +274,6 @@ searchButton.addEventListener('click', function () {
         //     });
         // });
     }
-
-    // Add event listeners for checkboxes
-    checkboxes = document.querySelectorAll(".book-checkbox");
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-            var index = parseInt(this.getAttribute("data-index"));
-            var selectedBook = searchResults.results[index];
-
-            if (this.checked) {
-                // Add the selected book to localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks.push(selectedBook);
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            } else {
-                // Remove the selected book from localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks = selectedBooks.filter(function (book) {
-                    return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-                });
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            }
-        });
-    });
 });
 
 
