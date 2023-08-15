@@ -171,50 +171,22 @@ var searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', function () {
     var subcategoryInput = document.getElementById('subCategory').value;
     var resultsContainer = document.getElementById("results-display");
-    var authorNameInput = document.getElementById("author-name").value.trim();
+    // var authorNameInput = document.getElementById("author-name").value.trim();
     resultsContainer.textContent = ""; // Clear previous results
 
+    
     // Create an array to store books that match the criteria
     var matchingBooks = [];
-
     for (let i = 0; i < searchResults.results.length; i++) {
         var book = searchResults.results[i];
 
         // Subcategory
         var subcategoryFiltered = book.subcategories.some(subcategory => subcategory === subcategoryInput);
-
-        // Author
-        // THERE'S SOMETHING WRONG WITH THIS LOGIC BECAUSE I CAN'T GET ANYTHING TO DISPLAY
-        // var authorFiltered = book.authors.some(author => {
-        //     // Search for the input word in the author's names
-        //     return author.toLowerCase().includes(authorsInput.trim().toLowerCase());
-        // });
-
-        // Author
-        // Loop through each author's first name in the current book
-
-        for (let j = 0; j < book.authors.length; j++) {
-            var authorFiltered = book.authors[j];
-
-            // Check if the input matches the current author's first name
-            if (authorFiltered.includes(authorNameInput)) {
-                matchingBooks.push(book);
-            }
-        }
-
-        // Lexile
-        var lexileMin = document.getElementById('min-lexile').value;
-        var lexileMax = document.getElementById('max-lexile').value;
-        var lexileFiltered = book.measurements.english.lexile
-        if (lexileFiltered >= lexileMin && lexileFiltered <= lexileMax) {
-            matchingBooks.push(book);
-        }
-
-        if (subcategoryFiltered && lexileFiltered && firstNameFiltered && lastNameFiltered) {
-            matchingBooks.push(book);
+        if (subcategoryFiltered === true) {
+            matchingBooks.push(book)
         }
     }
-
+    
     if (matchingBooks.length > 0) {
         for (var i = 0; i < matchingBooks.length; i++) {
             // Display matching books
@@ -280,78 +252,36 @@ searchButton.addEventListener('click', function () {
         // Append the book container to the results container
         resultsContainer.appendChild(bookContainer);
 
-        // // Add event listeners for checkboxes
-        // checkboxes = document.querySelectorAll(".book-checkbox");
-        // checkboxes.forEach(function (checkbox) {
-        //     checkbox.addEventListener("change", function () {
-        //         var index = parseInt(this.getAttribute("data-index"));
-        //         var selectedBook = newBooks;
+        // Add event listeners for checkboxes
+        checkboxes = document.querySelectorAll(".book-checkbox");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                var index = parseInt(this.getAttribute("data-index"));
+                var selectedBook = newBooks;
 
-        //         if (this.checked) {
-        //             // Add the selected book to localStorage
-        //             selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-        //             selectedBooks.push(selectedBook);
-        //             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-        //         } else {
-        //             // Remove the selected book from localStorage
-        //             selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-        //             selectedBooks = selectedBooks.filter(function (book) {
-        //                 return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-        //             });
-        //             localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-        //         }
-        //     });
-        // });
-    }
-
-    // Add event listeners for checkboxes
-    checkboxes = document.querySelectorAll(".book-checkbox");
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-            var index = parseInt(this.getAttribute("data-index"));
-            var selectedBook = searchResults.results[index];
-
-            if (this.checked) {
-                // Add the selected book to localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks.push(selectedBook);
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            } else {
-                // Remove the selected book from localStorage
-                selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
-                selectedBooks = selectedBooks.filter(function (book) {
-                    return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
-                });
-                localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
-            }
+                if (this.checked) {
+                    // Add the selected book to localStorage
+                    selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                    selectedBooks.push(selectedBook);
+                    localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+                } else {
+                    // Remove the selected book from localStorage
+                    selectedBooks = JSON.parse(localStorage.getItem('selectedBooks')) || [];
+                    selectedBooks = selectedBooks.filter(function (book) {
+                        return book.title !== selectedBook.title; // You can adjust the comparison criteria as needed
+                    });
+                    localStorage.setItem('selectedBooks', JSON.stringify(selectedBooks));
+                }
+            });
         });
-    });
+    }
 });
 
+var homeButton = document.getElementById('home-button');
+homeButton.addEventListener('click', function () {
+    window.location.href = "index.html"
+});
 
-// Add an event listener to the "Search" button
-// var searchButton = document.getElementById('search-button');
-// searchButton.addEventListener('click', function () {
-//     // Get the search input values
-//     var firstNameInput = document.getElementById("first-name").value.trim().toLowerCase();
-//     var lastNameInput = document.getElementById("last-name").value.trim().toLowerCase();
-//     var subcategoryInput = document.getElementById("subcategory").value.trim().toLowerCase();
-
-//     // Filter the results based on the search inputs
-//     filteredResults = searchResults.results.filter(function (book) {
-//         var matchFirstName = !firstNameInput || (book.author_first_names && book.author_first_names.some(function (name) {
-//             return name.toLowerCase().includes(firstNameInput);
-//         }));
-//         var matchLastName = !lastNameInput || (book.author_last_names && book.author_last_names.some(function (name) {
-//             return name.toLowerCase().includes(lastNameInput);
-//         }));
-//         var matchSubcategory = !subcategoryInput || (book.subcategories && book.subcategories.some(function (subcat) {
-//             return subcat.toLowerCase().includes(subcategoryInput);
-//         }));
-//         return matchFirstName && matchLastName && matchSubcategory;
-//     });
-//     displayResults(searchResults, currentPage, resultsPerPage);
-//     fetchNextPage();
 
 resultsPerPage = 100;
 // Display the first set of results
@@ -883,7 +813,6 @@ function updateNextButtonState() {
     }
 }
 
-
 var reloadButton = document.getElementById('reload-button');
 reloadButton.addEventListener('click', () => {
     location.reload();
@@ -892,6 +821,5 @@ reloadButton.addEventListener('click', () => {
 // Call the function initially to set the button state
 updatePreviousButtonState();
 updateNextButtonState();
-
 
 setInterval(updateTime, 1000);

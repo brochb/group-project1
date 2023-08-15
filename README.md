@@ -17,3 +17,10 @@ https://brochb.github.io/group-project1/<br><br>
 
 
 **From here you can select your favorites, and save them to your inventory, and clear as you see fit!
+
+**From the main page, your history is shown on the left side as clickable links. When the link is clicked is populates 
+the query search parameters with the ones you have clicked!
+![image](https://github.com/brochb/group-project1/assets/39662430/117c8768-fe97-4651-8d78-8cf8cde6c93e)
+
+**The resulting effect is shown here...
+![image](https://github.com/brochb/group-project1/assets/39662430/bcc320d0-41ca-4a5d-91a6-9679322c1b01)
