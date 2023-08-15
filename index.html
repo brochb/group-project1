@@ -9,6 +9,8 @@
     <title>The Book Search Extraordinaire!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <script src = "https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 
@@ -65,7 +67,49 @@
         
         <div id="saved-search">
             <h2>Saved Books From Search:</h2>
-            <button id="clear-selection-button" style="background-color: red; border-radius: 10px; color: white; box-shadow: 0px 0px 2px 2px rgb(0, 0, 0);">Clear Selected Books</button>
+            <section class = "section">
+                <div class = "container">
+                   <br>
+                   <br>
+            <button id="clear-selection-button" style="background-color: red; border-radius: 10px; color: white; box-shadow: 0px 0px 2px 2px rgb(0, 0, 0);" class="button is-primary modal-button"data-target = "#modal">Clear Selected Books</button>
+                   <!-- creates a modal after clicking the clear history button -->
+                   <div id = "modal" class = "modal">
+                      <div class = "modal-background"></div>
+                      <div class = "modal-content">
+                         <div class = "box">
+                            <article class = "media">
+                               <div class = "media-left">
+                               </div>
+                               <div class = "media-content">
+                                  <div class = "content">
+                                     <p>
+                                        <strong>The saved history section will now be deleted.</strong>
+                                     </p>
+                                  </div>
+                                  <nav class = "level">
+                                     <div class = "level-left">
+                                        <a class = "level-item">
+                                           <span class = "icon is-small">
+                                              <i class = "fa fa-reply"></i>
+                                           </span>
+                                        </a>
+                                        <a class = "level-item">
+                                           <span class = "icon is-small">
+                                              <i class = "fa fa-retweet"></i>
+                                           </span>
+                                        </a>
+                                     </div>
+                                  </nav>
+                                  
+                               </div>
+                            </article>
+                         </div>
+                      </div>
+                      <button class = "modal-close is-large" aria-label = "close"></button>
+                   </div>
+                </div>
+             </section>
+
             <ul id="inventory"></ul>
         </div>
 
@@ -84,6 +128,19 @@
             &copy; 2023 Mongooses
         </p>
     </footer>
+
+    <script>
+        $(".modal-button").click(function() {
+           var target = $(this).data("target");
+           $("html").addClass("is-clipped");
+           $(target).addClass("is-active");
+        });
+        
+        $(".modal-close").click(function() {
+           $("html").removeClass("is-clipped");
+           $(this).parent().removeClass("is-active");
+        });
+     </script>
 
     <script src="./assets/javascript/script.js"></script>
 </body>
