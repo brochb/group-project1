@@ -1,3 +1,13 @@
+Show functionality of The Great Book Extraordinaire!
+
+
+
+
+
+
+
+<!-- This was the old plan, but thankfully George let us know we were not supposed to be sharing code to muggles XD
+
 **Presented primarily by Broch, and the team:
 
 index.html, AND results.html each coresponding to a different webpage.
@@ -14,12 +24,11 @@ The importance of even the smallest Design Documentation (desginDoc).
 
 The structure of the README and how it assists the user in using the application.
 
-
 **Presented primarily by Ricardo, and the team:
 
 script.js, AND results.js each coresponding to their respective HTML pages
 
-	a breakdown of the structure of the javascript on btoh pages including...
+	a breakdown of the structure of the javascript on both pages including...
 		(scipt.js)
 		API features, geolocation captures location, and uses it to find the current weather there, which uses that weather data to display a message
 
@@ -59,4 +68,4 @@ style.css coresponds to all elements, and classes in both html pages
 	
 
 **Present primarily by ALL:
-	The intended function of the application
+	The intended function of the application -->
