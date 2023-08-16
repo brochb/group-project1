@@ -1,10 +1,33 @@
 Show functionality of The Great Book Extraordinaire!
 
+Features we want to showcase:
+
+1. Explain the POWER of the Bookfinder API
+
+2. Search filter on main page, search filter narrowing on results page.
+	**OpenWeather API Technology
+
+3. History and Saved Books on the Main Page.
+
+4. Weather message that is dynamic based on the weather conditions at the users provided IP location.
+	**Geolocation Technology
+
+5. Time and Date shown in the upper right.
+	**DayJS
+
+6. Home button, and how its' redirect will increase the 'traffic' to the home page for google search purposes.
 
 
 
-
-
+Steps
+1. Explain the Different Search Parameters for the book finder API (It's so much bigger then we show) (1)
+2. Show the Homepage, and mention History, and Saved Books.
+3. Make a search to navigate to the Reults page
+4. Select some books while scrolling down, and show the Home button (6)
+5. Navigate to Home Page, showcase new history, and books saved.
+6. Search again and Navigate to the Results page
+7. (Pass to Ricardo) Explain the OpenWeather API technology, and how we use to to choose a message for the user (2)
+8. (Pass to Richard) Explain the functionality of the geolocation API, and  
 
 <!-- This was the old plan, but thankfully George let us know we were not supposed to be sharing code to muggles XD
 
